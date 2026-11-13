@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>하늘에서 용사가 떨어졌다 — 세계관과 도감</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* 밤하늘 한 장: 남색 바탕 위에 흰 글씨, 코발트는 강조 하나에만. 섹션은 세로로 흐르는 별자리 지도처럼 */
+  --night:#0b1230;
+  --deep:#111a42;
+  --panel:#16204f;
+  --cobalt:#4f74e3;
+  --star:#f4f6ff;
+  --mist:#a9b6e2;
+  --ember:#e88a6f;
+  --line:rgba(169,182,226,.18);
+  --display:"Gowun Batang","Nanum Myeongjo",serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--night);color:var(--star);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--mist)}
+h1,h2,h3{font-family:var(--display);font-weight:700;text-wrap:balance;margin:0}
+:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+#sky{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+main{position:relative;z-index:1}
+
+/* hero */
+.hero{padding:56px 0 64px;background:radial-gradient(120% 80% at 50% 0%,#24398f 0%,var(--night) 70%)}
+.hero .wrap{display:grid;grid-template-columns:1fr;gap:48px;align-items:center}
+.hero .logo{width:min(560px,100%);filter:drop-shadow(0 0 18px rgba(79,116,227,.75)) drop-shadow(0 0 2px #1a2a6e)}
+.hero .lede{font-family:var(--display);font-size:clamp(19px,2.2vw,24px);margin:28px 0 10px;max-width:30ch}
+.hero .sub{color:var(--mist);max-width:52ch;margin:0}
+.teaser{border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 24px 60px rgba(0,0,0,.5);aspect-ratio:832/1216;background:var(--deep)}
+.teaser img{width:100%;height:100%;object-fit:cover}
+.jump{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
+.jump a{padding:9px 16px;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:var(--star);font-size:14px;background:rgba(17,26,66,.6)}
+.jump a:hover{border-color:var(--cobalt)}
+
+section{padding:72px 0;border-top:1px solid var(--line)}
+.eyebrow{font-size:13px;letter-spacing:.18em;color:var(--cobalt);margin:0 0 8px}
+h2{font-size:clamp(28px,3.4vw,40px);margin-bottom:12px}
+.intro{color:var(--mist);max-width:62ch;margin:0 0 36px}
+
+/* world */
+.night-tale{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.tale{background:linear-gradient(180deg,var(--panel),rgba(22,32,79,.55));border:1px solid var(--line);border-radius:14px;padding:24px 26px}
+.tale h3{font-size:21px;margin-bottom:8px}
+.tale .ti{max-width:none;width:calc(100% + 52px);margin:-24px -26px 18px;aspect-ratio:3/2;object-fit:cover;border-radius:14px 14px 0 0}
+.tale{overflow:hidden}
+.season .si{max-width:none;width:calc(100% + 32px);margin:-14px -16px 12px;aspect-ratio:3/2;object-fit:cover;border-radius:12px 12px 0 0}
+.season{overflow:hidden}
+.tale p{margin:0;color:#d7ddf5}
+.tale.wide{grid-column:1/-1}
+.seasons{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px}
+.season{border-radius:12px;padding:14px 16px;background:rgba(11,18,48,.55);border:1px solid var(--line)}
+.season b{display:block;font-family:var(--display);font-size:17px}
+.season span{color:var(--mist);font-size:14px}
+.season.winter{border-color:var(--cobalt);background:rgba(79,116,227,.12)}
+.factions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.factions span{font-size:14px;padding:5px 12px;border-radius:999px;background:rgba(11,18,48,.6);border:1px solid var(--line)}
+
+/* modes */
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.mode{border-radius:14px;padding:24px;border:1px solid var(--line);background:var(--deep);display:flex;flex-direction:column;gap:10px}
+.mode .tag{font-size:13px;font-weight:600;letter-spacing:.06em}
+.mode h3{font-size:22px}
+.mode p{margin:0;color:#d7ddf5;font-size:15px}
+.mode ul{margin:4px 0 0;padding-left:18px;color:var(--mist);font-size:14px}
+.mode.hero-m{border-top:3px solid var(--cobalt)} .mode.hero-m .tag{color:var(--cobalt)}
+.mode.vil{border-top:3px solid var(--ember)} .mode.vil .tag{color:var(--ember)}
+.mode.free{border-top:3px solid var(--mist)} .mode.free .tag{color:var(--mist)}
+
+/* places */
+.places{display:flex;gap:14px;overflow-x:auto;padding-bottom:10px;scroll-snap-type:x mandatory}
+.place{flex:0 0 300px;scroll-snap-align:start;margin:0;border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--deep)}
+.place img{aspect-ratio:3/2;object-fit:cover;width:100%}
+.place figcaption{padding:10px 14px;font-family:var(--display);font-size:16px}
+.note{color:var(--mist);font-size:14px;margin-top:10px}
+
+/* map */
+.mapbox{display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+.map{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.map img{width:100%}
+.pin{position:absolute;transform:translate(-50%,-50%);border:0;cursor:pointer;font:600 13px var(--body);color:#3b2a1a;background:rgba(255,250,238,.92);padding:4px 10px 4px 8px;border-radius:999px;box-shadow:0 2px 8px rgba(60,40,10,.35);display:flex;align-items:center;gap:6px;white-space:nowrap}
+.pin::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 rgba(232,138,111,.7);animation:pulse 2s infinite}
+.pin[aria-pressed="true"]{background:var(--cobalt);color:#fff}
+.pin[aria-pressed="true"]::before{background:#fff}
+.pin:hover{transform:translate(-50%,-50%) scale(1.06)}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(232,138,111,0)}100%{box-shadow:0 0 0 0 rgba(232,138,111,0)}}
+.mpanel{background:var(--deep);border:1px solid var(--line);border-radius:14px;padding:18px;max-height:min(80vh,760px);display:flex;flex-direction:column}
+.mpanel h3{font-size:24px}
+.mcount{color:var(--mist);font-size:14px;margin:2px 0 12px}
+.mlist{overflow-y:auto;display:flex;flex-direction:column;gap:10px;padding-right:4px}
+.chibis{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.chibi{all:unset;cursor:pointer;display:flex;flex-direction:column;align-items:center;border-radius:12px;padding:4px 0 8px;animation:drop .4s both;transition:background .2s}
+.chibi:hover{background:rgba(79,116,227,.18)}
+.chibi:focus-visible{outline:2px solid var(--cobalt)}
+.chibi img{width:100%;max-width:150px;aspect-ratio:1}
+.chibi span{font-family:var(--display);font-weight:700;font-size:16px;margin-top:-6px}
+.mlabel{color:var(--mist);font-size:13px;margin:14px 0 6px}
+.bgs{display:flex;flex-direction:column;gap:8px}
+.bgs img{width:100%;border-radius:8px;border:1px solid var(--line)}
+@keyframes drop{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:none}}
+
+/* codex */
+.tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:24px}
+.chip{border:1px solid var(--line);background:rgba(17,26,66,.7);color:var(--star);padding:8px 15px;border-radius:999px;font:500 14px var(--body);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--cobalt);border-color:var(--cobalt)}
+.chip:hover{border-color:var(--cobalt)}
+.search{margin-left:auto;min-width:200px;flex:0 1 260px;background:var(--deep);border:1px solid var(--line);border-radius:999px;color:var(--star);padding:9px 16px;font:15px var(--body)}
+.legend{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:-8px 0 18px;color:var(--mist);font-size:14px}
+.legend .count{margin:0;margin-right:auto}
+.legend b{color:var(--star)}
+.count{color:var(--mist);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{all:unset;cursor:pointer;display:flex;flex-direction:column;border-radius:14px;overflow:hidden;background:var(--deep);border:1px solid var(--line);transition:transform .2s,border-color .2s}
+.card:hover{transform:translateY(-3px);border-color:var(--cobalt)}
+.card:focus-visible{outline:2px solid var(--cobalt);outline-offset:3px}
+.card .ph{position:relative}
+.card img{aspect-ratio:600/877;object-fit:cover;width:100%}
+.badges{position:absolute;top:10px;left:10px;display:flex;gap:6px}
+.badge{font-size:12px;padding:2px 9px;border-radius:999px;background:rgba(11,18,48,.8);border:1px solid var(--line)}
+.card .tx{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px}
+.card .nm{font-family:var(--display);font-size:23px;font-weight:700;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.card .rl{font:500 13px var(--body);color:var(--mist)}
+.card .q{color:#d7ddf5;font-size:14px;margin-top:4px}
+
+/* dialog */
+dialog{border:1px solid var(--line);border-radius:18px;padding:0;background:var(--deep);color:var(--star);max-width:1040px;width:calc(100% - 32px);max-height:calc(100% - 32px)}
+dialog::backdrop{background:rgba(5,8,24,.78);backdrop-filter:blur(3px)}
+.dl{display:grid;grid-template-columns:minmax(0,400px) 1fr;align-items:stretch}
+.dpic{position:relative;background:var(--night)}
+.dpic img{width:100%;height:100%;min-height:100%;aspect-ratio:832/1216;object-fit:cover;object-position:50% 20%;position:sticky;top:0}
+.db{padding:24px 28px 28px;display:flex;flex-direction:column;gap:14px}
+.db h3{font-size:32px}
+.db .rl{color:var(--mist);font-size:15px;margin-top:-8px}
+.db .line{font-family:var(--display);font-size:19px;border-left:3px solid var(--cobalt);padding:4px 0 4px 14px;margin:2px 0}
+.exp{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.exp figure{margin:0}
+.exp img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:50% 25%;border-radius:8px;border:1px solid var(--line)}
+.exp figcaption{font-size:13px;color:var(--mist);text-align:center;margin-top:4px}
+.rows{display:grid;grid-template-columns:100px 1fr;gap:8px 16px;margin:0}
+.rows dt{color:var(--mist);font-size:14px;padding-top:2px}
+.rows dd{margin:0;font-size:15px}
+.secret{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.secret details{border:1px solid var(--line);border-radius:12px;padding:10px 14px;background:rgba(11,18,48,.5)}
+.secret summary{cursor:pointer;font-weight:600;font-size:14px}
+.secret details.h summary{color:var(--cobalt)} .secret details.v summary{color:var(--ember)}
+.secret details p{margin:8px 0 2px;font-size:15px}
+.close{position:absolute;top:12px;right:12px;width:40px;height:40px;border-radius:50%;border:1px solid var(--line);background:rgba(11,18,48,.8);color:var(--star);font-size:20px;cursor:pointer}
+footer .wrap{display:flex;flex-wrap:wrap;gap:6px 18px;justify-content:space-between}
+.mode .st{display:block;margin:10px 0 2px;font-size:13px;color:var(--mist);letter-spacing:.02em}
+footer{padding:40px 0 60px;color:var(--mist);font-size:14px;border-top:1px solid var(--line)}
+
+@media (max-width:860px){
+  .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .mapbox{grid-template-columns:1fr}
+  .pin{font-size:11px;padding:3px 8px 3px 6px}
+  .mpanel{max-height:none}
+  .hero .wrap{grid-template-columns:1fr}
+  .teaser{max-width:360px}
+  .night-tale,.modes{grid-template-columns:1fr}
+  .seasons{grid-template-columns:repeat(2,1fr)}
+  .search{margin-left:0;flex-basis:100%}
+  .secret{grid-template-columns:1fr}
+  .rows{grid-template-columns:84px 1fr}
+  .dl{grid-template-columns:1fr}
+  .dpic img{aspect-ratio:3/4;height:auto}
+}
+@media (prefers-reduced-motion:reduce){.card{transition:none}.card:hover{transform:none}.pin::before,.chibi{animation:none}}
+</style>
+</head>
+<body>
+<canvas id="sky" aria-hidden="true"></canvas>
+<main>
+<header class="hero">
+  <div class="wrap">
+    <div>
+      <h1><img class="logo" src="img/logo.png" alt="하늘에서 용사가 떨어졌다"></h1>
+      <p class="lede">300년 전, 세상의 모든 여자가 빛이 되어 사라져 버렸다.</p>
+      <p class="sub">남자들만 남은 아르셀 왕국에 300주기 기일이 다가오고 있다. 그리고 기일을 꼭 60일 앞둔 가을밤, 하늘에서 당신이 떨어진다.</p>
+      <nav class="jump" aria-label="바로가기">
+        <a href="#world">세계관</a><a href="#modes">플레이 모드</a><a href="#places">지도</a><a href="#codex">캐릭터 도감</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<section id="world">
+  <div class="wrap">
+    <h2>세계관</h2>
+    <p class="intro">이야기의 무대는 대륙 엘레시아의 아르셀 왕국이다. 여자가 사라진 지 300년이 지나, 지금은 남자들만 남아 살아가고 있다.</p>
+    <div class="night-tale">
+      <article class="tale">
+        <img class="ti" src="img/w/night.jpg" alt="" loading="lazy">
+        <h3>침묵의 밤</h3>
+        <p>300년 전 어느 밤, 모든 종족의 여자가 하룻밤 사이에 빛이 되어 사라졌다. 이 저주를 내린 것은 신들의 신 에온이며, 왜 그랬는지는 오직 에온만이 알고 있다.</p>
+      </article>
+      <article class="tale">
+        <img class="ti" src="img/w/tree.jpg" alt="" loading="lazy">
+        <h3>생명나무</h3>
+        <p>대신전 안뜰에는 거대한 생명나무가 서 있다. 여자가 사라진 뒤로 아이는 이 나무에서 사내아이로만 태어나고 있으며, 남자끼리 사랑하는 것도 이제는 흔한 일이 되었다.</p>
+      </article>
+      <article class="tale">
+        <img class="ti" src="img/w/memory.jpg" alt="" loading="lazy">
+        <h3>여자를 기억하는 자 ◆</h3>
+        <p>300년 넘게 살아온 존재들만이 아직 여자를 기억하고 있다. 마탑주와 용, 엘프 왕, 인어, 뱀파이어, 그리고 신들이 그렇다. 도감에서는 이름 옆에 ◆로 표시해 두었다.</p>
+      </article>
+      <article class="tale">
+        <img class="ti" src="img/w/heaven.jpg" alt="" loading="lazy">
+        <h3>천계</h3>
+        <p>구름 계단을 올라가면 신들의 땅이 나온다. 신이 데려가 주지 않으면 들어갈 수 없는 곳으로, 만신전의 가장 높은 왕좌는 언제나 비어 있다.</p>
+      </article>
+      <article class="tale wide">
+        <h3>여자로 시작하면</h3>
+        <p>당신은 300년 만에 나타난 단 한 명의 여자가 된다. 모두가 당신을 저주를 풀 열쇠라고 믿고, 저마다의 이유로 당신을 손에 넣으려 한다.</p>
+        <p style="margin-top:12px">왕실은 보호를 핑계로 당신을 감시하고, 신전은 당신이 성녀인지 이단인지 심사하려 한다. 마탑에서는 매일같이 연구 신청서가 날아오고, 뒷골목에는 당신 몸에 현상금이 붙었다. 용과 악마 역시 저마다의 속셈으로 당신을 노리고 있다.</p>
+        <h3 style="margin-top:20px">남자로 시작하면</h3><p>당신은 이 세계에 사는 평범한 사내가 된다. 직접 정한 신분에 따라 이야기가 흘러간다.</p>
+      </article>
+    </div>
+    <div class="seasons" aria-label="왕국의 행사">
+      <div class="season"><img class="si" src="img/w/spring.jpg" alt="" loading="lazy"><b>봄 · 건국제</b><span>왕도 전체가 들썩이는 축제가 열린다</span></div>
+      <div class="season"><img class="si" src="img/w/summer.jpg" alt="" loading="lazy"><b>여름 · 개화제</b><span>생명나무에 꽃이 피는 날을 기린다</span></div>
+      <div class="season"><img class="si" src="img/w/autumn.jpg" alt="" loading="lazy"><b>가을 · 수확제</b><span>수확을 축하하고 가면 무도회가 열린다</span></div>
+      <div class="season winter"><img class="si" src="img/w/winter.jpg" alt="" loading="lazy"><b>겨울 · 기일</b><span>12월 21일, 1년 중 밤이 가장 긴 날. 왕국 전체가 불을 끄고 침묵한다. 올해로 300주기를 맞는다.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="modes">
+  <div class="wrap">
+    <h2>플레이 모드</h2>
+    <p class="intro">시작 설정에서 세 가지 모드 중 하나를 고를 수 있다. 이야기는 300년 10월 22일 밤에 시작되고, 어느 모드든 기일인 12월 21일까지 남은 시간은 60일이다.</p>
+    <div class="modes">
+      <article class="mode hero-m">
+        <span class="tag">용사</span><span class="st">시작 설정 1 · 알몸으로 뚝, 용사</span>
+        <h3>생명나무를 지켜라</h3>
+        <p>당신은 에온과 내기를 하게 된다. 기일 밤에 바엘이 생명나무를 불태우려 하는데, 이를 막아 내면 여자들이 돌아오고, 막지 못하면 당신도 빛이 되어 사라진다.</p>
+        <ul><li>사내들의 상처를 보듬어 💗를 100까지 채우면 동료로 합류한다</li><li>바엘이 때때로 나타나 동료들을 꾀어내려 한다</li><li>능력을 고르면 에온이 그에 맞는 대가를 붙인다</li></ul>
+      </article>
+      <article class="mode vil">
+        <span class="tag">빌런</span><span class="st">시작 설정 2 · 악마와의 계약</span>
+        <h3>보물을 훔쳐라</h3>
+        <p>당신은 악마 벨리안과 계약을 맺었다. 표적으로 고른 사내가 가장 아끼는 보물을 기일까지 빼앗아 바쳐야 하며, 정체를 들키면 영혼을 잃게 된다.</p>
+        <ul><li>🖤는 표적이 당신에게 무너진 정도를 나타낸다</li><li>👁️의심이 쌓이면 이단심문관과 용사 아서가 뒤를 캐기 시작한다</li><li>보물을 하나 바치면 다음 표적을 고를 수 있다</li></ul>
+      </article>
+      <article class="mode free">
+        <span class="tag">자유</span><span class="st">시작 설정 3 · 자유설정</span>
+        <h3>원하는 역할로</h3>
+        <p>시종이나 용의 아내, 포로처럼 원하는 역할을 정해서 시작한다. 내기나 계약은 원할 때만 이야기에 끌어들이면 된다.</p>
+        <ul><li>정한 역할에 어울리는 인물이 이야기의 중심이 된다</li><li>기일 밤에는 이름 없는 제단에서 에온을 만나게 된다</li><li>시작 화면에서 서른넷 전원의 얼굴을 한 번에 볼 수 있다</li></ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="places">
+  <div class="wrap">
+    <h2>지도</h2>
+    <p class="intro">가고 싶은 곳을 말하면 바로 도착한다. 왕좌의 방부터 해적선 갑판, 에온의 흰 공허까지.</p>
+    <div class="mapbox">
+      <div class="map" id="map"><img src="img/map.jpg" alt="아르셀 왕국 지도"></div>
+      <aside class="mpanel" aria-live="polite">
+        <h3 id="mtitle"></h3>
+        <p class="mcount" id="mcount"></p>
+        <div class="mlist" id="mlist"></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="codex">
+  <div class="wrap">
+    <h2>캐릭터 도감</h2>
+    <p class="intro">서른넷의 사내가 당신을 기다리고 있다.</p>
+    <div class="tools">
+      <div id="chips" style="display:flex;flex-wrap:wrap;gap:8px" role="group" aria-label="세력별 보기"></div>
+      <label for="q" class="sr" style="position:absolute;left:-9999px">이름이나 직업으로 찾기</label>
+      <input id="q" class="search" type="search" placeholder="이름·직업으로 찾기">
+    </div>
+    <div class="legend"><p class="count" id="count"></p><span><b>◆</b> 여자를 기억하는 자</span><span><b>★</b> 철벽</span></div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+</main>
+
+<dialog id="dlg" aria-labelledby="dname">
+  <div style="position:relative">
+    <button class="close" id="dclose" aria-label="닫기">×</button>
+    <div class="dl">
+      <div class="dpic"><img id="dimg" alt=""></div>
+      <div class="db">
+        <div><h3 id="dname"></h3></div>
+        <p class="rl" id="drole"></p>
+        <p class="line" id="dline"></p>
+        <dl class="rows" id="drows"></dl>
+        <div class="exp" id="dexp"></div>
+        <div class="secret" id="dsecret"></div>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<footer><div class="wrap"><span>하늘에서 용사가 떨어졌다 · 크랙 1:1 롤플레이 · 여성향 · 제작 무쭈</span><span>전원 성인 · 19세 이용가</span></div></footer>
+
+<script>
+const F={royal:"왕궁·귀족",knight:"기사단",temple:"신전·마탑",kin:"이종족",gods:"신과 악마",out:"바깥세상",fate:"용사와 악당"};
+const C=[
+{n:"레온하르트",i:2,f:"royal",r:"국왕",m:"47세 · 193cm",s:1,look:"은발 올백, 금안, 검은 왕관, 흰 담비털 망토, 인장 반지. 서른 남짓으로 보인다.",trait:"피가 차가운 냉혈한이다. 사람을 쓸모로만 판단하고, 누군가를 버릴 때도 표정 하나 바뀌지 않는다.",line:"그대가 쓸모 있는 동안은 곁에 두지.",w:"아무도 믿지 않는다",t:"선왕의 국새",hob:"밤늦게 혼자 체스 두기",like:"질 좋은 와인, 조용한 집무실, 말 잘 듣는 사람",hate:"변명, 눈물로 하는 호소, 허락 없이 몸에 손대는 것",sx:"돔 · 지배형. 옷 한 벌 흐트러뜨리지 않고 명령만으로 상대를 무너뜨린다."},
+{n:"카시안",i:7,f:"royal",r:"왕세자",m:"27세 · 188cm",look:"플래티넘 블론드 옆머리, 푸른 눈, 사파이어 귀걸이, 백색 군복.",trait:"겉으로는 다정한 왕자님이지만, 속으로는 꿍꿍이를 숨기고 있다.",line:"걱정 마세요. 당신을 해치는 건 제가 전부 치워 드릴게요.",w:"가면 아래 얼굴은 아무도 원치 않는다",t:"어머니의 초상 로켓",hob:"장미 가꾸기, 사람 관찰",like:"흰 장미, 자신을 믿고 기대 오는 사람",hate:"아버지와 비교당하는 것, 루시엔",sx:"돔 · 소유욕형. 다정한 말투로 몰아붙이고 몸에 흔적을 남긴다."},
+{n:"루시엔",i:26,f:"royal",r:"2왕자 · 서자",m:"24세 · 186cm",look:"적갈색 반묶음, 초록 눈, 눈 밑 점, 붉은 벨벳 코트.",trait:"늘 술에 취해 있는 한량이다. 혼자 있을 때면 숨겨 둔 우울이 새어 나온다.",line:"한 잔 할래? 맨정신으로 버티기엔 여긴 너무 숨 막히잖아.",w:"서자라 쓸모없다",t:"어머니의 낡은 류트",hob:"류트 연주, 낮술",like:"와인, 발코니에서 보는 밤 풍경",hate:"왕궁 연회, 서자라고 불리는 것",sx:"스위치 · 퇴폐형. 취해서 들러붙고, 끝나면 쓸쓸해한다."},
+{n:"이반",i:33,f:"royal",r:"북부 대공",m:"31세 · 197cm",s:1,look:"잿빛 숏컷, 옅은 회색 눈, 얼굴 흉터, 검은 털망토.",trait:"말수가 적고 눈매가 사나워서 다들 그를 피한다. 사람을 얼려 죽였다는 소문까지 돌고 있다.",line:"…겁나면 안 와도 돼. 난 괜찮으니까.",w:"다들 무서워 피한다",t:"늑대 문장 반지",hob:"눈 덮인 숲 산책, 장작 패기",like:"따뜻한 수프, 겁먹지 않고 다가오는 사람",hate:"자기를 둘러싼 소문, 시끄러운 무도회",sx:"돔 · 서툰 다정형. 힘 조절을 못 해서 자꾸 괜찮냐고 묻는다."},
+{n:"오렐리앙",i:8,f:"royal",r:"공작가 후계자",m:"29세 · 187cm",look:"허니블론드 장발, 호박색 눈, 상아색 브로케이드 코트.",trait:"능글맞은 나르시시스트이자 카사노바다. 서두르지 않고 신사적으로 상대를 꼬신다.",line:"이 세상에서 저 다음으로 아름다운 분을 이제야 뵙네요.",w:"진심으로 사랑해 본 적 없다",t:"가보 손거울",hob:"거울 보기, 가면 수집",like:"아름다운 것, 칭찬, 찬사",hate:"촌스러운 옷차림, 거절당하는 것",sx:"서비스 탑. 상대가 무너지는 모습을 보며 칭찬을 퍼붓는다."},
+{n:"자말",i:17,f:"royal",r:"남방 제국 황태자",m:"28세 · 190cm",look:"갈색 피부, 한 줄 땋은 긴 흑발, 금안, 흰 로브, 이마의 금사슬.",trait:"원하는 건 대놓고 공격적으로 꼬신다. 사람들이 보는 앞에서도 거리낌이 없다.",line:"거절은 안 받아. 내 나라엔 그런 말이 없거든.",w:"다들 자리만 본다",t:"황태자의 금사슬",hob:"말 타기, 매사냥",like:"뜨거운 햇볕, 금 장신구, 원하는 걸 손에 넣는 순간",hate:"북부의 추위, ‘안 된다’는 말",sx:"돔 · 소유욕형. 끌어안은 채 절대 놓아주지 않는다."},
+{n:"가브리엘",i:9,f:"knight",r:"성기사단장",m:"33세 · 194cm",s:1,look:"작게 묶은 애쉬블론드, 회청색 눈, 금 태양십자 흰 서코트, 붉은 묵주.",trait:"지독하게 고지식하다. 규정에서 한 글자도 벗어나지 않으며, 농담도 진지하게 받아들인다.",line:"규정에 없는 일입니다. …그러니 제가 책임지겠습니다.",w:"규정 밖에선 옳은 걸 모른다",t:"서약검",hob:"기도, 검술 수련, 규정집 다시 읽기",like:"정해진 일과, 깨끗하게 닦은 갑옷",hate:"규정 위반, 농담(진담인지 헷갈려서)",sx:"미경험 · 금욕형. 끝까지 버티다 한번 무너지면 매달린다."},
+{n:"라일",i:3,f:"knight",r:"근위대 부단장",m:"26세 · 187cm",look:"흑발 곱슬 숏컷, 처진 강아지 눈, 볼 반창고, 붉은 목도리.",trait:"늘 텐션이 높고 시끄러울 만큼 발랄하다.",line:"저랑 놀아요! 아, 아니 호위요! 호위해 드릴게요!",w:"혼자 남는 게 무섭다",t:"동기들과 나눈 은 배지",hob:"동기들과 내기, 맛집 찾기",like:"칭찬, 단 간식, 누군가와 같이 있는 것",hate:"혼자 남겨지는 것, 조용한 야간 근무",sx:"스위치 · 강아지형. 칭찬을 받으면 멈추질 못한다."},
+{n:"다리우스",i:4,f:"knight",r:"흑기사",m:"30세 · 195cm",look:"앞머리 흰 브릿지가 있는 긴 흑발, 강철색 눈, 뺨 흉터, 찢어진 망토.",trait:"전장밖에 모르는 전쟁광이라, 평화로운 왕도가 지루해서 견디질 못한다.",line:"칼 쥘 줄은 알아? 모르면 내가 가르쳐 주지.",w:"전쟁 말고는 쓸모없다",t:"첫 전장의 부러진 검",hob:"검 손질, 대련 상대 찾기",like:"전쟁 소식, 강한 상대, 독한 술",hate:"평화, 지루한 연회, 겁쟁이",sx:"돔 · 거친형. 싸우듯 거칠게 몰아붙이고 멍을 남긴다."},
+{n:"펠릭스",i:5,f:"knight",r:"견습기사",m:"20세 · 183cm",look:"진저 숏컷, 초록 눈, 주근깨, 코 반창고.",trait:"햇살 같은 리트리버 같은 성격이다. 누구든 좋아하고, 칭찬을 받으면 신이 나서 어쩔 줄 모른다.",line:"저 오늘 잘했죠? 그쵸? 칭찬해 주세요!",w:"기사가 될 수 있을지 불안하다",t:"서임 날 달 은박차",hob:"말 돌보기, 아침 달리기",like:"칭찬, 고기, 기사 이야기",hate:"혼나는 것, 비 오는 날 훈련 취소",sx:"미경험 · 체력형. 하나하나 물어보면서 체력은 끝이 없다."},
+{n:"엘리아스",i:23,f:"knight",r:"왕세자 호위기사",m:"28세 · 189cm",s:1,look:"남색 앞머리 숏컷, 짙은 남색 눈, 한쪽 어깨의 검은 반망토.",trait:"겉으로는 완벽한 기사지만 속은 부끄럼이 많다. 조금만 놀려도 귀까지 빨개져서 굳어 버린다.",line:"호, 호위일 뿐입니다. 정말 그것뿐이에요.",w:"아무에게도 다가가지 못한다",t:"카시안의 휘장",hob:"몰래 연애소설 읽기",like:"카시안을 지키는 일, 단정한 제복",hate:"갑자기 다가오는 사람, 놀림당하는 것",sx:"섭 · 부끄럼형. 얼굴을 가리고 소리를 참으려 애쓴다."},
+{n:"미카엘",i:22,f:"temple",r:"대신관",m:"29세 · 187cm",s:1,look:"긴 은발, 옅은 금안, 순백 사제복.",trait:"당신이 처음 나타난 모습으로 모든 것을 판단한다. 신성하게 나타났다면 신의 사자로 받들고, 불쑥 나타났다면 벌레 보듯 한다.",line:"…신께서 당신을 보내신 겁니까?",w:"신 말고 기댈 데가 없다",t:"순결 서약의 성배",hob:"성가 부르기, 백합 가꾸기",like:"새벽 기도, 순백의 것",hate:"천박한 것, 신을 모독하는 말",sx:"금욕 · 혐오형. 밀어내다 무너지면 자책하면서도 탐한다."},
+{n:"테오도르",i:11,f:"temple",r:"이단심문관",m:"32세 · 193cm",look:"와인색 중단발, 회색 눈, 검은 사제복.",trait:"늘 웃고 있지만 속을 알 수 없다. 웃는 얼굴로 거짓말을 하고 뒤에서 판을 짠다.",line:"걱정 마세요. 저는 언제나 당신 편이니까요.",w:"진짜 얼굴을 보인 적 없다",t:"귀족 비밀 장부",hob:"심문 기록 정리, 장기 두기",like:"약점이 많은 사람, 깔끔하게 짜인 판",hate:"예측할 수 없는 사람, 진심을 들키는 것",sx:"돔 · 사디스트. 웃는 얼굴로 심문하듯 괴롭힌다."},
+{n:"아스테르",i:21,f:"temple",r:"마탑주",m:"외견 32세 · 실제 340세 · 188cm",o:1,look:"짙은 보라 장발, 연보라 눈, 이마의 서클릿.",trait:"베일에 싸인 인물이다. 그의 진짜 목적은 아무도 모르며, 질문을 받으면 질문으로 되묻는다.",line:"늦으셨군요. 기다리고 있었습니다.",w:"340년 동안 혼자다",t:"평생의 금서",hob:"금서 해독, 별 관측",like:"오래된 책, 홍차, 흥미로운 수수께끼",hate:"무지, 자이드",sx:"스위치 · 탐구형. 반응을 하나씩 시험해 본다."},
+{n:"자이드",i:20,f:"temple",r:"흑마법사",m:"30세 · 190cm",look:"한쪽 눈 덮은 흑발, 탁한 금안, 다크서클, 목의 검은 문신.",trait:"음침하고 음산한 사내로, 상대가 겁먹은 얼굴을 좋아한다.",line:"으흐흐… 좋은 냄새가 나는데. 조금만 더 가까이 와 봐.",w:"다들 역겨워한다",t:"스승의 마도서",hob:"금지된 약초 채집, 해골 수집",like:"겁먹은 얼굴, 피 냄새, 비 오는 밤",hate:"햇빛, 아스테르, 깔끔 떠는 사람",sx:"돔 · 집착형. 으흐흐 웃으며 절대 놓아주지 않는다."},
+{n:"베르카스",i:14,f:"kin",r:"흑룡",m:"외견 33세 · 실제 800세 · 198cm",o:1,s:1,look:"새까만 장발, 커다란 검은 뿔, 하늘색 세로 동공.",trait:"근엄하고 오만하다. 세상에서 휴식을 방해받는 것을 가장 싫어한다.",line:"감히 내 잠을 깨운 게 너냐.",w:"800년의 고독",t:"용의 심장석",hob:"낮잠, 보물 세어 보기",like:"조용함, 반짝이는 것, 따뜻한 동굴",hate:"시끄러운 것, 잠을 깨우는 것, 용 사냥꾼",sx:"돔 · 소유형. 뜨거운 몸으로 짓누르고 품에 가둔다."},
+{n:"아즈하르",i:28,f:"kin",r:"청룡",m:"외견 30세 · 실제 600세 · 192cm",o:1,look:"사파이어색 장발, 짙푸른 세로 동공, 흰 사슴뿔.",trait:"용치고는 소극적인 편이다. 숲속 폭포에서 유유자적 지내며, 다툼은 되도록 피한다.",line:"급할 거 없어. 차라도 한잔 하고 가.",w:"싸움에서 도망친 적 있다",t:"여의주",hob:"차 우리기, 폭포 소리 듣기",like:"비 오는 날, 느긋한 대화",hate:"싸움, 재촉하는 사람",sx:"섭 · 느긋형. 천천히 움직이며 리드를 상대에게 맡긴다."},
+{n:"실바렌",i:27,f:"kin",r:"엘프 왕",m:"외견 30세 · 실제 900세 · 190cm",o:1,s:1,look:"아주 긴 연금발, 에메랄드 눈, 긴 뾰족귀, 잎으로 엮은 은관.",trait:"인간을 숲에 들이지 않는 엘프의 왕이다. 그래도 다치거나 약한 것에는 한없이 인자하다.",line:"다쳤군요. 이리 오세요, 오늘만은 숲이 당신을 받아 줄 겁니다.",w:"지키지 못한 동족",t:"숲의 관",hob:"숲 돌보기, 오래된 노래 부르기",like:"새벽 숲, 다친 짐승을 돌보는 일",hate:"숲을 해치는 인간, 불",sx:"돔 · 젠틀형. 천천히 오래, 상처 하나 남기지 않는다."},
+{n:"리엘",i:15,f:"kin",r:"엘프 궁수",m:"외견 25세 · 실제 120세 · 185cm",s:1,look:"연갈색 숏컷, 초록 눈, 깃털 귀걸이, 광대의 초록 페인팅.",trait:"엘프라는 사실에 자부심이 대단해서, 다른 종족을 대놓고 싫어한다.",line:"냄새나니까 저리 가. …안 다쳤으면 됐고.",w:"엘프 말고는 없다",t:"처음 깎은 활",hob:"활 깎기, 나무 위에서 낮잠",like:"엘프의 것이라면 전부, 사과",hate:"인간, 느린 것, 지저분한 것",sx:"브랫. 반항하고 대들다가 결국 길들여진다."},
+{n:"자레스",i:12,f:"kin",r:"다크엘프 암살자",m:"외견 28세 · 188cm",s:1,look:"갈색 피부, 흰 투블럭, 옅은 금안, 은 피어싱, 후드 망토.",trait:"인간도 엘프도 싫어한다. 어디에도 속하지 않고 혼자 살며 모두를 깔본다.",line:"이게 그렇게 귀하다는 거야? 별거 없네.",w:"어디에도 못 속했다",t:"어미의 단검",hob:"단검 던지기, 지붕 위에서 달 보기",like:"혼자 있는 시간, 밤",hate:"간섭, 엘프 왕족, 시끄러운 인간",sx:"돔 · 거친형. 말없이 벽에 밀어붙이고 등을 돌린다."},
+{n:"카이렌",i:1,f:"kin",r:"인어",m:"외견 26세 · 실제 320세 · 188cm",o:1,look:"젖은 은발 생머리, 옅은 물빛 눈, 지느러미 귀.",trait:"조금 어리숙하고 착해 빠졌다. 뭐든 쉽게 믿고, 자기보다 남 걱정을 먼저 한다.",line:"괜찮아요? 혼나는 건 제가 대신 할게요!",w:"육지에선 늘 이용당했다",t:"바다로 돌아갈 진주",hob:"조개껍데기 모으기, 노래",like:"햇볕 드는 바위, 친절한 사람",hate:"거짓말, 그물, 메마른 땅",sx:"미경험 · 순수형. 육지의 방식을 몰라 순하게 따라간다."},
+{n:"루드빅",i:13,f:"kin",r:"뱀파이어 백작",m:"외견 29세 · 실제 450세 · 189cm",o:1,look:"허리까지 오는 웨이브 흑발, 졸린 붉은 눈, 창백한 피부.",trait:"하루 종일 잠만 잔다. 깨어 있을 때도 늘 졸려 한다.",line:"…졸려. 깨우지 말고… 그냥 옆에 있어.",w:"살 이유가 없다",t:"인간 시절 초상화",hob:"잠, 더 자기",like:"푹신한 관, 비 오는 밤, 조용한 것",hate:"아침 햇살, 마늘, 깨우는 사람",sx:"섭 · 나른형. 반쯤 잠든 채로 목덜미를 문다."},
+{n:"에온",i:24,f:"gods",r:"신들의 신",m:"나이 없음 · 200cm",o:1,look:"바닥까지 끌리는 백발, 눈을 완전히 덮은 흰 베일, 큰 금빛 후광. 입술과 턱만 보인다.",trait:"장난기가 넘치고, 무슨 일이든 “알 게 뭐야” 하고 넘긴다. 저주를 내린 장본인이지만 그 이유는 절대 말하지 않는다.",line:"왔네, 꼬마. 저주? 알 게 뭐야~",hob:"인간 구경, 내기 걸기",like:"재미있는 것, 팝콘, 예상 밖의 일",hate:"지루함, 진지한 질문",sx:"종잡을 수 없음. 베일만큼은 끝까지 벗지 않는다."},
+{n:"아우렐",i:29,f:"gods",r:"태양신",m:"195cm",o:1,look:"긴 금발, 금안, 금 월계관, 얼굴의 금빛 문양, 토가.",trait:"인자하지만 지나치게 밝다. 아름다운 것을 그냥 지나치지 못하는 바람둥이다.",line:"이렇게 예쁜 걸 왜 이제야 봤지? 내 신전으로 와.",w:"진짜로 사랑받은 적 없다",t:"태양의 불씨",hob:"햇살 아래 낮잠, 연애",like:"아름다운 것, 축제, 칭찬",hate:"어둠, 지루한 인간, 녹턴의 장난",sx:"스위치 · 바람둥이형. 능숙하고 끝까지 밝다."},
+{n:"녹턴",i:16,f:"gods",r:"밤의 신",m:"194cm",o:1,look:"작은 별이 박힌 남흑발, 별이 뜬 눈, 은 별 머리핀, 밤하늘 망토.",trait:"발랄한 신이다. 인간을 아껴서 밤마다 몰래 내려와 구경하곤 한다.",line:"우와, 진짜 인간이다! 손 잡아 봐도 돼?",w:"인간은 먼저 죽는다",t:"가장 오래된 별 조각",hob:"몰래 지상 구경하기, 별 세기",like:"인간, 반짝이는 것, 밤 축제",hate:"인간이 먼저 죽는 것, 아침",sx:"스위치 · 장난형. 장난처럼 시작해서 놓아주지 않는다."},
+{n:"벨리안",i:30,f:"gods",r:"계약 악마",m:"외견 31세 · 실제 1000세 · 191cm",o:1,look:"눈을 덮은 긴 흑발 사이로 보이는 붉은 눈 하나, 휜 검은 뿔.",trait:"계약 전에는 달콤하게 유혹하지만, 서명을 받는 순간 차갑게 돌변한다.",line:"원하는 걸 말해 봐. 여기 서명만 하면 다 들어줄게.",hob:"계약서 쓰기, 영혼 수집",like:"서명, 절박한 사람, 붉은 촛불",hate:"계약 위반, 신관",sx:"돔 · 계약형. 조건부터 걸고, 서명받은 뒤에는 차가워진다."},
+{n:"로완",i:25,f:"out",r:"숲 사냥꾼",m:"35세 · 194cm",look:"덥수룩한 갈색 장발에 땋은 가닥 하나, 헤이즐 눈, 짙은 수염자국, 곰가죽 망토.",trait:"오지랖이 넓고 사람 좋은 사냥꾼이다.",line:"얼굴이 왜 이래. 밥은 먹고 다니냐?",w:"지키지 못한 사람이 있다",t:"그 사람의 머리끈",hob:"사냥, 요리, 나무 깎기",like:"배불리 먹는 사람, 모닥불, 숲",hate:"굶는 사람, 혼자 다니는 사람",sx:"대디형. 크게 감싸 안고, 끝나면 씻기고 먹인다."},
+{n:"케일",i:10,f:"out",r:"용 사냥꾼",m:"28세 · 190cm",look:"헝클어진 흑발, 호박색 눈, 한쪽 얼굴의 화상, 용 송곳니 목걸이.",trait:"거칠고 직설적인 성격이다. 용 이야기만 나오면 눈빛이 달라진다.",line:"그 도마뱀 근처엔 얼씬도 하지 마.",w:"용에게 가족을 잃었다",t:"원수 용의 이빨",hob:"검 갈기, 용 흔적 쫓기",like:"독한 술, 용의 이빨",hate:"용, 특히 흑룡, 동정 어린 눈빛",sx:"돔 · 거친형. 화상 자국을 못 보게 하며 거칠게 몰아붙인다."},
+{n:"라자르",i:18,f:"out",r:"도적 길드장",m:"29세 · 186cm",look:"긴 옆 앞머리로 한쪽 눈을 가린 흑발, 치켜 올라간 회색 눈, 올블랙 가죽코트.",trait:"말이 없고 신비로운 사내라, 무슨 생각을 하는지 아무도 모른다.",line:"…따라와.",w:"이름도 과거도 버렸다",t:"진짜 이름 쪽지",hob:"정보 모으기, 동전 굴리기",like:"침묵, 그림자, 약속을 지키는 사람",hate:"말 많은 사람, 과거를 캐묻는 것",sx:"돔 · 과묵형. 말없이 눈빛만으로 시킨다."},
+{n:"그레이",i:6,f:"out",r:"검투사",m:"26세 · 196cm",look:"짙은 갈색 크루컷, 옅은 파란 눈, 온몸의 흉터, 사슬 달린 부서진 쇠목줄.",trait:"평생 싸움만 하며 살아와서 감정을 모른다. 웃는 법도, 우는 법도 배운 적이 없다.",line:"…아파? 그럼, 안 싸울게.",w:"감정을 모른다",t:"자유를 산 첫 금화",hob:"훈련, 멍하니 하늘 보기",like:"배부른 것, 따뜻한 것(최근에 알게 됐다)",hate:"쇠사슬, 함성",sx:"미경험 · 본능형. 힘이 세서 자꾸 멈칫한다."},
+{n:"브론",i:19,f:"out",r:"대장장이",m:"30세 · 189cm",look:"가죽 머리띠를 두른 붉은 숏컷, 갈색 눈, 팔뚝 화상, 가죽 앞치마.",trait:"자기 일에 대한 자부심이 강하다. 그런데 칭찬을 받으면 얼굴이 시뻘게진다.",line:"…내가 만든 검이야. 최고라고.",w:"손재주뿐이다",t:"숨겨 둔 최고의 검",hob:"검 벼리기, 장비 수리",like:"좋은 쇠, 자기 검을 알아봐 주는 사람",hate:"대충 만든 물건, 칭찬받는 순간(부끄러워서)",sx:"섭 · 부끄럼형. 굳은살 박인 손을 자꾸 미안해한다."},
+{n:"모건",i:0,f:"out",r:"해적 선장",m:"31세 · 191cm",look:"햇볕에 바랜 금발 장발, 바다색 눈, 구릿빛 피부, 광대 흉터, 남색 선장 코트.",trait:"돈밖에 모르는 사내다. 사람도 값으로 계산하고, 돈 이야기만 나오면 눈이 반짝인다.",line:"공짜는 없어, 보물. 대가는 나중에 받을게.",w:"돈 말고 믿을 게 없었다",t:"황동 나침반",hob:"보물 지도 모으기, 흥정",like:"금화, 바다, 좋은 거래",hate:"공짜로 달라는 사람, 해군, 빚",sx:"스위치 · 거래형. 흥정하듯 시작해서 결국 다 퍼 준다."},
+{n:"아서",i:31,f:"fate",r:"에온의 용사",m:"23세 · 188cm",look:"금발 숏컷, 금빛 별이 뜬 하늘색 눈, 은빛 갑옷, 파란 망토, 성검.",trait:"누가 봐도 용사다. 정의롭고 사람을 무조건 믿는다. [빌런] 모드에서는 당신을 의심하며 뒤를 쫓는다.",line:"포기 안 해. 너까지 구할 거니까.",t:"에온의 별의 검",hob:"검술 수련, 사람 돕기",like:"정의, 아침 해, 친구",hate:"거짓말, 약한 사람을 괴롭히는 것",sx:"미경험 · 순수형. 끝나면 책임지겠다고 한다."},
+{n:"바엘",i:32,f:"fate",r:"벨리안의 계약자",m:"29세 · 192cm",look:"핏빛 장발, 짙은 피부, 한쪽이 부러진 검은 뿔, 검은 흰자에 노란 세로 동공.",trait:"세상을 전부 불태워 없애고 싶어 하며, 늘 살기가 흐른다. [용사] 모드에서 생명나무를 노리는 악당이다.",line:"전부 타 버리면 좀 조용해지겠지.",w:"다 불태울 것뿐이다",hob:"불 구경",like:"불길, 정적",hate:"생명나무, 신, 시끄러운 것 전부",sx:"돔 · 파괴형. 모든 걸 태워 버릴 듯이 거칠다."}
+];
+const grid=document.getElementById('grid'),chips=document.getElementById('chips'),q=document.getElementById('q'),count=document.getElementById('count');
+let cur='all';
+function esc(s){return s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+const pad=n=>String(n).padStart(2,'0');
+[['all','전체'],...Object.entries(F)].forEach(([k,v])=>{const b=document.createElement('button');b.className='chip';b.textContent=v;b.dataset.k=k;b.setAttribute('aria-pressed',k==='all');b.onclick=()=>{cur=k;[...chips.children].forEach(x=>x.setAttribute('aria-pressed',x.dataset.k===k));render()};chips.appendChild(b)});
+function render(){
+  const term=q.value.trim();
+  const list=C.filter(c=>(cur==='all'||c.f===cur)&&(!term||(c.n+c.r+F[c.f]).includes(term)));
+  count.textContent=list.length+'명';
+  grid.innerHTML=list.map(c=>`<button class="card" data-n="${esc(c.n)}" aria-label="${esc(c.n)} 자세히 보기">
+    <div class="ph"><img src="img/c/c${pad(c.i)}k.jpg" alt="" loading="lazy"><div class="badges">${c.o?'<span class="badge" title="여자를 기억하는 자">◆</span>':''}${c.s?'<span class="badge" title="철벽">★</span>':''}</div></div>
+    <div class="tx"><span class="nm">${esc(c.n)}</span><span class="rl">${esc(c.r)} · ${esc(F[c.f])}</span><span class="q">“${esc(c.line)}”</span></div></button>`).join('')||'<p class="note">찾는 인물이 없습니다. 다른 이름으로 찾아보세요.</p>';
+}
+q.addEventListener('input',render);
+const dlg=document.getElementById('dlg');
+grid.addEventListener('click',e=>{const b=e.target.closest('.card');if(!b)return;open(C.find(c=>c.n===b.dataset.n))});
+function open(c){
+  document.getElementById('dimg').src=(c.i===31||c.i===32)?`img/c/c${pad(c.i)}m.jpg`:`img/c/c${pad(c.i)}p.jpg`;
+  document.getElementById('dexp').innerHTML=[['a','미소'],['b','부끄러움'],['c','당황']].map(([k,v])=>`<figure><img src="img/c/c${pad(c.i)}${k}.jpg" alt="${esc(c.n)} ${v}"><figcaption>${v}</figcaption></figure>`).join('');
+  document.getElementById('dname').textContent=c.n+(c.o?' ◆':'')+(c.s?' ★':'');
+  document.getElementById('drole').textContent=`${c.r} · ${c.m} · ${F[c.f]}`;
+  document.getElementById('dline').textContent='“'+c.line+'”';
+  document.getElementById('drows').innerHTML=[['외모',c.look],['성격',c.trait],['취미',c.hob],['좋아하는 것',c.like],['싫어하는 것',c.hate],['취향',c.sx]].map(([a,b])=>`<dt>${a}</dt><dd>${esc(b)}</dd>`).join('');
+  document.getElementById('dsecret').innerHTML=(c.w?`<details class="h"><summary>[용사] 상처</summary><p>${esc(c.w)}</p></details>`:'')+(c.t?`<details class="v"><summary>[빌런] 보물</summary><p>${esc(c.t)}</p></details>`:'');
+  try{dlg.showModal()}catch(err){dlg.setAttribute('open','')}
+}
+document.getElementById('dclose').onclick=()=>dlg.close();
+dlg.addEventListener('click',e=>{if(e.target===dlg)dlg.close()});
+render();
+
+// 지도
+const M=[
+["에온의 흰 공허",12,13,["white_void","dream_lake","nameless_altar"]],
+["태양신의 신전",31,10,["sun_temple"]],
+["만신전",47,12,["pantheon","heaven_stairs"]],
+["별의 정원",64,9,["star_garden"]],
+["북부",50,27,["northern_fortress","hot_spring"]],
+["화산",78,26,["volcano_cave","storm_cliff"]],
+["엘프 숲",14,47,["elf_forest","waterfall_lake","forest_road","hunter_cabin","campsite","flower_field"]],
+["왕성",43,34,["throne_room","royal_study","royal_bedchamber","palace_guestroom","palace_hallway","palace_balcony","ballroom","banquet_hall","royal_bath","rose_garden","greenhouse","castle_kitchen","royal_stable","castle_wall","prison_cell"]],
+["왕도",41,60,["capital_square","city_gate","festival_street","memorial_night","back_alley","moonlit_rooftop","tavern","inn_room","thieves_den","forge","training_ground","guard_barracks","duke_manor","southern_lodge","carriage"]],
+["대신전·마탑",73,55,["grand_temple","tree_of_life","inquisition","mage_tower_library"]],
+["달밤 고성",92,52,["moonlit_castle","castle_hall"]],
+["콜로세움",59,73,["colosseum"]],
+["변경",80,62,["ruined_battlefield","burning_village"]],
+["항구",22,70,["harbor","pirate_deck"]],
+["지하 유적",8,74,["underground_ruins"]],
+["바다",58,93,["sea_cave"]],
+["사막",84,88,["desert_palace"]]
+];
+const WHO={"에온의 흰 공허": ["에온"], "태양신의 신전": ["아우렐"], "만신전": ["에온", "아우렐", "녹턴"], "별의 정원": ["녹턴"], "북부": ["이반"], "화산": ["베르카스", "케일"], "엘프 숲": ["실바렌", "리엘", "아즈하르", "로완"], "왕성": ["레온하르트", "카시안", "루시엔", "엘리아스"], "왕도": ["오렐리앙", "가브리엘", "라일", "펠릭스", "자레스", "라자르", "브론", "아서"], "대신전·마탑": ["미카엘", "테오도르", "아스테르"], "달밤 고성": ["루드빅", "벨리안"], "콜로세움": ["그레이"], "변경": ["다리우스", "바엘"], "항구": ["모건"], "지하 유적": ["자이드"], "바다": ["카이렌"], "사막": ["자말"]};
+const map=document.getElementById('map'),ml=document.getElementById('mlist');
+M.forEach((p,k)=>{const b=document.createElement('button');b.className='pin';b.textContent=p[0];b.style.left=p[1]+'%';b.style.top=p[2]+'%';b.setAttribute('aria-pressed','false');b.onclick=()=>pick(k);map.appendChild(b)});
+function pick(k){const p=M[k];[...map.querySelectorAll('.pin')].forEach((b,j)=>b.setAttribute('aria-pressed',j===k));
+  const who=(WHO[p[0]]||[]).map(n=>C.find(c=>c.n===n)).filter(Boolean);
+  document.getElementById('mtitle').textContent=p[0];document.getElementById('mcount').textContent=`인물 ${who.length}명 · 장소 ${p[3].length}곳`;
+  ml.innerHTML=`<div class="chibis">${who.map((c,j)=>`<button class="chibi" data-n="${esc(c.n)}" style="animation-delay:${j*70}ms"><img src="img/s/s${pad(c.i)}.webp" alt=""><span>${esc(c.n)}</span></button>`).join('')}</div><p class="mlabel">이곳의 장소</p><div class="bgs">${p[3].map((c,j)=>`<img src="img/bg/${c}.jpg" alt="" loading="lazy">`).join('')}</div>`;ml.scrollTop=0}
+ml.addEventListener('click',e=>{const b=e.target.closest('.chibi');if(b)open(C.find(c=>c.n===b.dataset.n))});
+pick(7);
+
+// 별 반짝임
+(function(){
+  const cv=document.getElementById('sky'),x=cv.getContext('2d');let st=[],w,h;
+  const still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){w=cv.width=innerWidth*devicePixelRatio;h=cv.height=innerHeight*devicePixelRatio;st=Array.from({length:70},()=>({x:Math.random()*w,y:Math.random()*h,r:(Math.random()*1.4+.4)*devicePixelRatio,p:Math.random()*6.28,s:.5+Math.random()}))}
+  function spark(s,a){x.globalAlpha=a;x.fillStyle='#f4f6ff';x.beginPath();x.arc(s.x,s.y,s.r,0,6.28);x.fill();if(s.r>1.4*devicePixelRatio&&a>.7){x.globalAlpha=a*.6;x.fillRect(s.x-s.r*4,s.y-.5,s.r*8,1);x.fillRect(s.x-.5,s.y-s.r*4,1,s.r*8)}}
+  function draw(t){x.clearRect(0,0,w,h);st.forEach(s=>spark(s,.35+.65*Math.abs(Math.sin(s.p+t/1000*s.s))));if(!still)requestAnimationFrame(draw)}
+  size();addEventListener('resize',size);requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>

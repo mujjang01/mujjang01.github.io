@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/>
+<meta content="#f8f7f9" name="theme-color"/><title>PRINTED ARCHIVE — 애완인간</title><link href="style.css" rel="stylesheet"/>
+<style>
+.archive-intro{padding:54px 0 36px;border-bottom:1px solid var(--line)}
+.archive-intro .path{margin-bottom:22px}.archive-intro h1{font-size:clamp(38px,5vw,66px);letter-spacing:-.07em;margin:0 0 12px}
+.archive-intro p{font-size:13px;line-height:1.9;color:#77717e;max-width:680px}
+.archive-stamp{display:inline-block;border:1px solid var(--purple);color:var(--purple);padding:7px 11px;font-size:9px;letter-spacing:.18em;transform:rotate(-2deg);margin-bottom:18px}
+.archive-tabs{display:flex;gap:8px;flex-wrap:wrap;padding:22px 0;border-bottom:1px solid var(--line)}
+.archive-tabs button{border:1px solid #ddd7e2;background:#fff;padding:10px 14px;font-size:10px;letter-spacing:.08em;color:#625a69}
+.archive-tabs button.active{background:#29232e;color:#fff;border-color:#29232e}
+.file-section{padding:32px 0 10px}
+.file-section-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px}
+.file-section-head h2{font-size:19px;margin:0}.file-section-head span{font-size:9px;letter-spacing:.18em;color:#9b8aa6}
+.file-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.archive-file{border:1px solid #e2dee5;background:#fff;position:relative;min-height:170px}
+.file-toggle{width:100%;height:100%;min-height:170px;text-align:left;border:0;background:transparent;padding:22px;display:flex;flex-direction:column;align-items:flex-start;color:inherit}
+.file-meta{display:flex;justify-content:space-between;width:100%;font-size:9px;letter-spacing:.15em;color:#8b7898}
+.file-toggle h3{font-size:20px;margin:17px 0 7px;letter-spacing:-.04em}
+.file-toggle p{font-size:12px;line-height:1.75;color:#77717d;margin:0;max-width:95%}
+.file-open{margin-top:auto;padding-top:18px;font-size:9px;letter-spacing:.14em;color:var(--purple);font-weight:800}
+.file-body{display:none;border-top:1px solid #e8e3eb;padding:24px;background:#faf9fb}
+.archive-file.open .file-body{display:block}
+.archive-file.open .file-open:after{content:" −"} .file-open:after{content:" ＋"}
+.paper{background:#f2eee6;border:1px solid #ddd4c7;padding:clamp(18px,3vw,34px);color:#302c2a;box-shadow:0 8px 22px #34263b0c}
+.paper h4{font-size:19px;margin:0 0 8px}.paper .paper-kicker{font-size:9px;letter-spacing:.2em;color:#8a6d83;margin-bottom:14px}
+.paper p,.paper li{font-size:12px;line-height:1.9}.paper ul{padding-left:19px}.paper small{font-size:10px;color:#786f70}
+.paper-fold{background:linear-gradient(135deg,#f8f4eb 0 49%,#e9e1d5 50%,#f5f0e6 51%);position:relative}
+.timeline{display:flex;gap:0;overflow-x:auto;padding:18px 0 12px}
+.timepoint{flex:0 0 190px;border-top:2px solid #8b7199;padding:14px 15px 10px 0;position:relative}
+.timepoint:before{content:"";position:absolute;top:-6px;left:0;width:10px;height:10px;border-radius:50%;background:#8b7199}
+.timepoint b{font:22px Georgia,serif;color:#76528a}.timepoint p{margin:7px 0;font-size:11px;line-height:1.7}
+.news-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.news{background:#eee8dc;padding:18px;border-left:3px solid #9b8b79;transform:rotate(-.3deg);box-shadow:0 3px 9px #30251a10}
+.news:nth-child(even){transform:rotate(.35deg)}.news small{font:10px Georgia,serif;color:#8a6c55}.news h5{font-size:14px;line-height:1.6;margin:9px 0}.news p{font-size:11px;line-height:1.7;margin:0;color:#665c54}
+.magazine{columns:2;column-gap:28px}.magazine article{break-inside:avoid;margin-bottom:22px}.magazine h5{font-size:15px;margin:0 0 8px}.magazine p{margin:0}
+.catalog{width:100%;border-collapse:collapse;background:#f8f6f1;font-size:11px}.catalog th,.catalog td{border:1px solid #d9d1c7;padding:11px;text-align:left}.catalog th{background:#e9e2d8;font-size:9px;letter-spacing:.1em}
+.shelter{background:#f7f4ed;border:1px dashed #a79b89;padding:24px;max-width:520px}.shelter .count{font:32px Georgia;color:#9a4545}
+.classified{background:#e8e5e2;border:1px solid #aaa;padding:25px;position:relative}.classified:after{content:"CLASSIFIED";position:absolute;right:18px;top:15px;border:3px solid #9b3d3d;color:#9b3d3d;font-weight:900;letter-spacing:.15em;padding:5px 9px;transform:rotate(8deg);opacity:.8}
+.redact{background:#27242a;color:#27242a;padding:0 5px;user-select:none}.checklist{list-style:none;padding:0}.checklist li{margin:8px 0}
+.teaser{background:#25212a;color:#fff;padding:28px;position:relative;overflow:hidden}.teaser:after{content:"SEALED";position:absolute;right:-12px;top:22px;border:2px solid #ad8ebc;color:#ad8ebc;padding:9px 22px;transform:rotate(12deg);letter-spacing:.2em}
+.quiz{background:#f2eef4;border:1px solid #ded5e5;padding:24px}.quiz label{display:block;font-size:12px;margin:12px 0}.quiz select{margin-left:8px;padding:7px;border:1px solid #cfc5d7;background:#fff}.quiz button{margin-top:12px;background:#302936;color:white;border:0;padding:11px 18px;font-size:11px}.quiz-result{font-size:13px;line-height:1.8;margin-top:14px;font-weight:700}
+.glossary-add{display:grid;grid-template-columns:repeat(3,1fr);gap:0 22px}
+.archive-file.open .file-toggle{height:auto}
+.archive-file.open{grid-column:1/-1}
+@media(max-width:700px){.file-grid,.news-grid{grid-template-columns:1fr}.magazine{columns:1}.glossary-add{grid-template-columns:1fr 1fr}.file-toggle{padding:18px}.archive-intro{padding:35px 0 25px}}
+/* ARCHIVE REDESIGN — editorial records room */
+body:has(.archive-intro){background:#f4f1f5;color:#29252f}
+.archive-intro{background:#29232f;color:#fff;padding:68px 0 52px;border:0;position:relative;overflow:hidden}
+.archive-intro:after{content:"HUMAN\A CARE\A BUREAU";white-space:pre;position:absolute;right:5%;top:20px;font:900 clamp(55px,10vw,132px)/.78 Arial,sans-serif;letter-spacing:-.08em;color:#ffffff08;text-align:right;pointer-events:none}
+.archive-intro .wrap{position:relative;z-index:1}
+.archive-intro .path{color:#c9bdcf;font-size:9px;letter-spacing:.2em}
+.archive-stamp{border-color:#c8a9d8;color:#e2cce9;transform:none;font-weight:700}
+.archive-intro h1{font-size:clamp(42px,6vw,78px);letter-spacing:-.075em;line-height:1.02;margin-bottom:18px}
+.archive-intro p{color:#d2cbd6;font-size:13px;max-width:610px}
+.archive-tabs{padding:18px 0 22px;border-bottom:1px solid #d7d0dc;gap:7px}
+.archive-tabs button{border:1px solid #cfc6d4;background:transparent;color:#655b6d;font-weight:700;letter-spacing:.13em;padding:11px 17px}
+.archive-tabs button.active{background:#76508a;border-color:#76508a;color:white}
+.file-section{padding:42px 0 12px}
+.file-section-head{align-items:center;justify-content:space-between;border-bottom:1px solid #d8d0dd;padding-bottom:13px;margin-bottom:20px}
+.file-section-head h2{font-size:22px;letter-spacing:-.05em}
+.file-section-head span{font-size:9px;color:#8d7b97;letter-spacing:.18em}
+.file-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.archive-file{min-height:215px;border:1px solid #d9d1dd;background:#fbfafb;box-shadow:0 5px 18px #30253808;transition:transform .2s,box-shadow .2s}
+.archive-file:hover{transform:translateY(-3px);box-shadow:0 12px 25px #30253812}
+.file-toggle{min-height:215px;padding:21px 20px 18px;position:relative;overflow:hidden}
+.file-toggle:after{content:"";position:absolute;right:18px;top:58px;width:54px;height:68px;border:1px solid #ded5e3;transform:rotate(7deg);background:linear-gradient(135deg,transparent 48%,#eee8f1 49% 51%,transparent 52%);opacity:.8}
+.file-meta{font-size:8px;color:#8a7198;letter-spacing:.13em;gap:8px}
+.file-toggle h3{font-size:19px;line-height:1.35;margin:26px 0 9px;max-width:82%;letter-spacing:-.055em}
+.file-toggle p{font-size:11px;line-height:1.8;color:#77717d;max-width:90%}
+.file-open{font-size:8px;letter-spacing:.18em;border-top:1px solid #e5dfe8;width:100%;padding-top:14px;margin-top:18px}
+.file-body{background:#ebe6ef;border-top:1px solid #d8cfdf;padding:20px}
+.paper{background:#f7f2e9;border:1px solid #d9cfc0;box-shadow:0 12px 25px #2a21310c}
+.paper .paper-kicker{color:#866b91}
+.news{transform:none!important;box-shadow:none;border-left:3px solid #92769f;background:#f4efe8}
+.news:nth-child(even){transform:none}
+.classified{background:#e4e0e2}
+.teaser{background:#302938}
+.quiz{background:#eee8f2;border-color:#d8cddd}
+.glossary-add{grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px}
+.glossary-item{padding:13px 0;border-bottom:1px solid #ddd5e1}
+.glossary-item b{font-size:12px;color:#4e3b59}
+.glossary-item p{font-size:11px;line-height:1.7;color:#77717d}
+@media(max-width:900px){.file-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.glossary-add{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.archive-intro{padding:44px 0 34px}.archive-intro:after{right:-8%;top:32px;font-size:72px}.archive-intro h1{font-size:42px}.file-grid{grid-template-columns:1fr}.file-toggle{min-height:180px}.archive-file{min-height:180px}.file-section-head{align-items:flex-start;flex-direction:column;gap:6px}.glossary-add{grid-template-columns:1fr 1fr}.file-body{padding:12px}}
+
+
+
+/* FILE 01—07 CONTENT REWRITE */
+.signature{font-weight:700;text-align:right;color:#725779;margin-top:10px}
+.archive-quote{margin:14px 0;padding:13px 16px;border-left:3px solid #8b7199;background:#ebe5ed;color:#463b49;font-family:Georgia,"Nanum Myeongjo",serif;font-size:13px;line-height:1.9}
+.paper h5,.classified h5,.teaser h5{font-size:14px;margin:22px 0 8px;letter-spacing:-.02em}
+.qa{padding:10px 13px;margin:9px 0;background:#fff9;border-left:2px solid #b9a4bd}
+.qa b{font-size:12px}.qa p{margin:5px 0 0}
+.guestbook{margin-top:22px;padding:18px;border-top:1px dashed #a99aa7;background:#f8f4ec}
+.guestbook p{margin:5px 0;font-family:Georgia,serif;font-size:12px}
+.press-underline{margin:12px 0 0;padding:8px 0;border-top:1px solid #c9b9a9;color:#963f48;font-size:12px;text-decoration:underline;text-decoration-thickness:1px}
+.news.ad-clip{background:#f4efe7;border-left-color:#9b4545;transform:none}
+.news.ad-clip blockquote{font-size:12px;line-height:1.9;margin:8px 0 0;color:#4b4140}
+.poll-table{margin:10px 0 12px}
+.table-scroll{overflow-x:auto;margin:12px 0}
+.auction-table{min-width:680px}
+.shelter-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:12px 0 18px}
+.shelter-card{background:#f7f4ed;border:1px dashed #a79b89;padding:16px;min-width:0}
+.shelter-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-bottom:9px;border-bottom:1px solid #ddd3c5}
+.shelter-card-top span{font:700 18px Georgia,serif;color:#76528a}
+.shelter-card p{font-size:11px;line-height:1.8;margin:9px 0 0}
+.shelter-card .shelter-meta{font-size:10px;color:#8b6e82}
+.process-line{padding:12px;background:#f6f2ef;border:1px solid #d4ceca;font-size:12px}
+.notice{margin:12px 0;padding:14px;border:1px solid #999;background:#f2f0ed}
+.notice p{margin:4px 0}
+.handwritten{font-family:"Nanum Myeongjo",serif;font-style:italic;color:#7a3d4e;transform:rotate(-1deg);margin-top:18px}
+.schedule-line{padding:12px;background:#ffffff16;border:1px solid #ffffff35;font-size:12px}
+.teaser .archive-quote{background:#ffffff12;color:#eee4f1;border-left-color:#c19bcf}
+.teaser .archive-quote span{display:block;text-align:right;margin-top:6px;font-size:11px}
+.sealed-ending{margin-top:34px;padding-top:16px;border-top:1px dashed #8b7e92;color:#b6a9ba;text-align:center;font-size:11px}
+.to-be-continued{margin-top:24px;padding:18px;border:1px solid #9b82a8;color:#d9c8df;text-align:center;letter-spacing:.25em;font-weight:900}
+@media(max-width:700px){.shelter-grid{grid-template-columns:1fr}.auction-table{min-width:620px}.paper .timeline{padding-bottom:16px}}
+
+
+/* V32 — ARCHIVE AS AN EDITORIAL READING ROOM */
+.file-toggle:after{content:none!important;display:none!important}
+.file-grid{align-items:stretch;gap:16px}
+.archive-file{min-height:0;border:1px solid #d7cdda;background:#fbfafc;box-shadow:0 4px 14px #241b2d0a}
+.file-toggle{height:auto;min-height:0;padding:19px 20px 17px;display:flex;gap:0}
+.file-toggle h3{font-size:20px;line-height:1.32;margin:17px 0 8px;max-width:100%}
+.file-toggle p{font-size:11px;line-height:1.72;min-height:39px;max-width:100%;color:#6f6874}
+.file-open{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid #e3dce7;width:100%;font-size:9px}
+.file-open:before{content:"READ DOCUMENT";letter-spacing:.16em}
+.file-open:after{content:"↗"!important;font-size:15px;line-height:1}
+.archive-file.open{grid-column:auto}
+.archive-file.open .file-body{display:none}
+.card-preview{height:116px;width:100%;margin-top:15px;position:relative;overflow:hidden;border:1px solid #dcd4df;background:#f0ebf2;color:#39323d;padding:12px 13px;display:block}
+.booklet-preview{display:grid;grid-template-columns:42% 1fr;gap:9px;background:#e9e1eb}
+.mini-cover{background:#3a2f3e;color:#f5eff3;padding:9px 8px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:2px 2px 0 #bcaec4}
+.mini-cover span{font:7px Georgia,serif;letter-spacing:.1em;color:#d4c4db}
+.mini-cover b{font:700 12px/1.25 Georgia,"Nanum Myeongjo",serif}
+.mini-cover i{font:6px Arial,sans-serif;letter-spacing:.1em;font-style:normal;color:#c7b4cf}
+.mini-index{display:flex;flex-direction:column;justify-content:center;gap:7px}
+.mini-index b{font:700 8px Arial,sans-serif;letter-spacing:.18em;color:#775986}
+.mini-index span{font-size:8px;line-height:1.8}
+.mini-index em{font:italic 9px Georgia,serif;color:#8e7c92}
+.timeline-preview{background:#eee8f0;padding:18px 13px 10px}
+.mini-timeline{display:flex;align-items:center;justify-content:space-between;position:relative}
+.mini-timeline:before{content:"";position:absolute;left:5px;right:5px;top:9px;border-top:1px solid #9b83a6}
+.mini-timeline span{display:flex;align-items:center;flex-direction:column;gap:5px;z-index:1}
+.mini-timeline b{font:9px Georgia,serif;background:#eee8f0;padding:0 3px;color:#634c70}
+.mini-timeline i{width:7px;height:7px;border-radius:50%;background:#876a95;border:1px solid #eee8f0}
+.mini-caption{font-size:10px;font-weight:800;margin-top:16px}
+.mini-foot{font:6px Arial,sans-serif;letter-spacing:.13em;color:#877a8c;margin-top:7px}
+.press-preview{background:#f3eee7;padding:12px 15px;border-top:4px solid #342d35}
+.press-date{font:7px Georgia,serif;letter-spacing:.12em;color:#8a7769;padding-bottom:5px;border-bottom:1px solid #d5c9bb}
+.press-preview>b{display:block;font:700 16px/1.15 Georgia,"Nanum Myeongjo",serif;margin:9px 0 4px}
+.press-preview>span{font-size:8px;color:#766b64}
+.press-preview>i{display:block;font:italic 8px Georgia,serif;color:#9b4853;margin-top:7px}
+.magazine-preview{background:#eee6ee;padding:10px 13px}
+.magazine-mast{font:7px Arial,sans-serif;letter-spacing:.14em;border-bottom:1px solid #b8a9ba;padding-bottom:5px}
+.magazine-mast strong{font:700 12px Georgia,serif;letter-spacing:.02em;margin:0 4px}
+.magazine-headline{font:12px Georgia,"Nanum Myeongjo",serif;line-height:1.2;margin:9px 0 7px}
+.magazine-headline b{font-size:15px;color:#674b72}
+.magazine-columns{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.magazine-columns span{height:19px;background:repeating-linear-gradient(to bottom,#a99daa 0 1px,transparent 1px 4px);opacity:.55}
+.magazine-preview small{display:block;font:6px Arial,sans-serif;letter-spacing:.12em;color:#887b8b;margin-top:5px}
+.auction-preview{background:#f5f1e9;padding:10px 13px}
+.auction-top{display:flex;justify-content:space-between;border-bottom:1px solid #cfc5b7;padding-bottom:6px;font-size:8px;letter-spacing:.1em}
+.auction-top span{font-size:6px;color:#8c7d72}
+.auction-mini-row{display:grid;grid-template-columns:65px 18px 1fr;gap:6px;align-items:center;padding:6px 0;border-bottom:1px solid #e1d9cf;font-size:8px}
+.auction-mini-row span{font-weight:900;color:#775a83}
+.auction-mini-row em{font-style:normal;color:#74685f;font-size:8px}
+.classified-preview{background:#e5e2e3;border-color:#bcb4b9;padding:11px 14px}
+.classified-stamp{position:absolute;right:11px;top:10px;border:2px solid #a34a4d;color:#a34a4d;font:900 8px Arial,sans-serif;letter-spacing:.1em;padding:3px 5px;transform:rotate(6deg)}
+.classified-preview small{font:7px Georgia,serif;color:#716970}
+.classified-preview>b{display:block;font:900 11px/1.15 Arial,sans-serif;letter-spacing:.04em;margin:9px 0}
+.classified-preview>span{font-size:7px;color:#625a62}
+.classified-preview>i{display:block;font:10px monospace;color:#242126;letter-spacing:.2em;margin-top:5px}
+.institute-preview{background:#302938;color:#f1e9f3;border-color:#66536d;padding:11px 14px}
+.institute-seal{position:absolute;right:13px;top:10px;width:35px;height:35px;border:1px solid #b49ac0;border-radius:50%;display:grid;place-items:center;color:#cbb6d4;font:italic 12px Georgia,serif}
+.institute-preview small{font:6px Arial,sans-serif;letter-spacing:.12em;color:#c3b2c9}
+.institute-preview>b{display:block;font:14px/1.2 Georgia,"Nanum Myeongjo",serif;margin:8px 0}
+.institute-preview>span{display:block;font:6px Arial,sans-serif;letter-spacing:.12em;color:#c3b2c9}
+.institute-preview>em{position:absolute;right:13px;bottom:9px;font:6px Arial,sans-serif;letter-spacing:.1em;color:#ad97b8}
+.file-body{padding:0;background:transparent;border:0}
+.archive-modal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:28px}
+.archive-modal.is-open{display:flex}
+.archive-modal-backdrop{position:absolute;inset:0;background:rgba(23,19,27,.78);backdrop-filter:blur(5px)}
+.archive-modal-panel{position:relative;z-index:1;width:min(1040px,100%);max-height:min(88vh,940px);display:flex;flex-direction:column;background:#f5f1f6;border:1px solid #b9a8c0;box-shadow:0 26px 90px #09070d88}
+.archive-modal-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 24px;background:#302938;color:#f8f3f8;flex:0 0 auto}
+.archive-modal-head small{display:block;font:8px Arial,sans-serif;letter-spacing:.2em;color:#c7b5cf;margin-bottom:6px}
+.archive-modal-head h2{font-size:20px;line-height:1.25;margin:0;font-weight:800}
+.archive-modal-close{flex:0 0 auto;width:38px;height:38px;border:1px solid #8d7c91;background:transparent;color:#fff;font-size:22px;line-height:1}
+.archive-modal-close:hover{background:#76528a}
+.archive-modal-content{overflow:auto;padding:clamp(16px,3vw,34px);overscroll-behavior:contain}
+.archive-modal-content>.paper,.archive-modal-content>.news-grid,.archive-modal-content>.classified,.archive-modal-content>.teaser{width:100%;max-width:100%;margin:0 auto}
+.archive-modal-content .paper{padding:clamp(18px,3vw,36px)}
+.archive-modal-content .paper h4,.archive-modal-content .classified h4,.archive-modal-content .teaser h4{font-size:clamp(22px,3vw,30px);line-height:1.3;margin:4px 0 22px}
+.archive-modal-content .paper h5,.archive-modal-content .classified h5,.archive-modal-content .teaser h5{font-size:17px;margin:28px 0 10px;padding-left:10px;border-left:3px solid #957aa2}
+.archive-modal-content .paper p,.archive-modal-content .paper li,.archive-modal-content .classified p,.archive-modal-content .classified li,.archive-modal-content .teaser p,.archive-modal-content .teaser li{font-size:14px;line-height:2}
+.archive-modal-content .paper ul,.archive-modal-content .teaser ul{padding-left:22px}
+.archive-modal-content .timeline{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 24px;overflow:visible}
+.archive-modal-content .timepoint{flex:auto;padding:15px 0 17px 20px;border-top:0;border-left:2px solid #8b7199}
+.archive-modal-content .timepoint:before{top:18px;left:-6px}
+.archive-modal-content .timepoint h5{margin:0 0 6px!important;border:0!important;padding:0!important}
+.archive-modal-content .timepoint b{font-size:17px}
+.archive-modal-content .timepoint p{font-size:13px;margin:8px 0}
+.archive-modal-content .timepoint small{font-size:11px;line-height:1.8}
+.archive-modal-content .news-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.archive-modal-content .news{padding:20px;transform:none}
+.archive-modal-content .news h5{font-size:17px}
+.archive-modal-content .news p{font-size:13px;line-height:1.9}
+.archive-modal-content .magazine{columns:2;column-gap:38px}
+.archive-modal-content .magazine article{padding:0 0 22px;margin-bottom:22px;border-bottom:1px solid #ddd3c6}
+.archive-modal-content .catalog{font-size:12px}
+.archive-modal-content .catalog th,.archive-modal-content .catalog td{padding:12px}
+.archive-modal-content .shelter-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.archive-modal-content .shelter-card p{font-size:12px}
+.archive-modal-content .classified{padding:clamp(20px,3vw,36px)}
+.archive-modal-content .checklist li{margin:8px 0}
+.archive-modal-content .teaser{padding:clamp(22px,4vw,40px)}
+body.modal-open{overflow:hidden}
+@media(max-width:720px){
+ .archive-modal{padding:0;align-items:stretch}
+ .archive-modal-panel{width:100%;max-height:100dvh;height:100dvh;border:0}
+ .archive-modal-head{padding:14px 17px}
+ .archive-modal-head h2{font-size:17px}
+ .archive-modal-content{padding:12px}
+ .archive-modal-content .timeline,.archive-modal-content .news-grid{grid-template-columns:1fr}
+ .archive-modal-content .magazine{columns:1}
+ .archive-modal-content .shelter-grid{grid-template-columns:1fr}
+ .archive-modal-content .auction-table{min-width:620px}
+}
+
+/* V34 — IMAGE-BASED ARCHIVE DOCUMENTS */
+.archive-modal-panel{overflow:hidden}
+.archive-modal-content{
+  display:block;
+  overflow-x:hidden;
+  overflow-y:auto;
+  padding:0!important;
+  background:#ede9ef;
+  overscroll-behavior:contain;
+  scrollbar-gutter:stable;
+}
+.archive-document-image{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+  margin:0 auto;
+  object-fit:contain;
+}
+@media(max-width:720px){
+  .archive-modal-content{padding:0!important}
+  .archive-document-image{width:100%;height:auto}
+}
+
+/* V35 — DESKTOP: SHOW THE ENTIRE ARCHIVE IMAGE IN ONE VIEW */
+@media (min-width:721px){
+  .archive-modal{padding:24px}
+  .archive-modal-panel{
+    width:fit-content;
+    min-width:360px;
+    max-width:calc(100vw - 48px);
+    height:calc(100vh - 48px);
+    max-height:calc(100vh - 48px);
+    overflow:hidden;
+  }
+  .archive-modal-head{flex:0 0 auto}
+  .archive-modal-content{
+    flex:1 1 auto;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    padding:12px!important;
+  }
+  .archive-document-image{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:100%;
+    object-fit:contain;
+    margin:auto;
+  }
+}
+/* Keep touch-first reading on small screens. */
+@media(max-width:720px){
+  .archive-modal-panel{height:100dvh;max-height:100dvh}
+  .archive-modal-content{
+    display:block;
+    overflow-x:hidden;
+    overflow-y:auto;
+    padding:0!important;
+  }
+  .archive-document-image{
+    width:100%;
+    height:auto;
+    max-width:100%;
+    max-height:none;
+    object-fit:contain;
+  }
+}
+</style></head><body>
+<header class="site-header"><div class="header-inner"><a aria-label="애완인간 홈" class="brand" href="index.html"><img alt="애완인간 PET HUMAN" src="assets/logo_pet_human_header.png"/></a><button aria-expanded="false" class="mobile-toggle" type="button">MENU</button><nav class="nav"><a href="index.html">HOME</a><a href="world.html">WORLD</a><a href="series.html">SERIES</a><a href="characters.html">CHARACTERS</a><a href="archive.html">ARCHIVE</a><a href="registry.html">REGISTRY</a></nav><div class="header-code">THE HUMAN COMPANION ARCHIVE</div></div></header>
+<main><section class="archive-intro"><div class="wrap"><div class="path">PET HUMAN / PRINTED ARCHIVE / 04</div><div class="archive-stamp">PUBLIC RECORDS · SELECTED DOCUMENTS</div><h1>인간 생활 자료실</h1><p>수인 사회에서 제작·배포된 인쇄물을 수집한 기록 보관소입니다. 보호자 안내서부터 신문 스크랩, 경매 카탈로그와 열람 제한 문서까지. 이곳의 문서는 모두 해당 사회의 관점으로 작성되어 있습니다.</p></div></section>
+<div class="wrap">
+<div class="archive-tabs"><button class="active" data-filter="all">ALL FILES</button><button data-filter="public">PUBLIC</button><button data-filter="restricted">RESTRICTED</button><button data-filter="sealed">SEALED</button></div>
+<section class="file-section" data-group="public"><div class="file-section-head"><h2>일반 열람 자료</h2><span>PUBLIC DOCUMENTS / FILE 01—05</span></div><div class="file-grid">
+<article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 01 · HUMAN CARE BUREAU</span><span>BOOKLET</span></span><h3>처음 인간을 맞이하시는 보호자님께</h3><p>인간보호청이 새 보호자에게 나눠주는 안내 소책자. 친절하게 쓰여 있다.</p><div aria-hidden="true" class="card-preview booklet-preview">
+<div class="mini-cover"><span>HCB / GUIDE 001</span><b>처음 인간을<br/>맞이하시는 분께</b><i>NEW GUARDIAN BOOKLET</i></div>
+<div class="mini-index"><b>FIRST WEEK</b><span>01 등록 · 03 검진 · 05 이름 · 07 잠자리</span><em>보호자용 안내서</em></div>
+</div><span class="file-open">OPEN DOCUMENT</span></button><div class="file-body"><img alt="처음 인간을 맞이하시는 보호자님께" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file01.webp"/></div></article>
+<article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 02 · MUSEUM EXHIBIT</span><span>TIMELINE</span></span><h3>반려 인간 연대기</h3><p>시립 반려사 박물관 2층 상설 전시 패널. 마지막 장에 방명록이 붙어 있다.</p><div aria-hidden="true" class="card-preview timeline-preview">
+<div class="mini-timeline"><span><b>古代</b><i></i></span><span><b>近代</b><i></i></span><span><b>60Y</b><i></i></span><span><b>30Y</b><i></i></span><span><b>NOW</b><i></i></span></div>
+<div class="mini-caption">반려 인간의 지위는 어떻게 바뀌었을까?</div>
+<div class="mini-foot">MUSEUM OF COMPANION HISTORY · FLOOR 02</div>
+</div><span class="file-open">OPEN DOCUMENT</span></button><div class="file-body"><img alt="반려 인간 연대기" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file02.webp"/></div></article>
+<article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 03 · PRESS CLIPPINGS</span><span>NEWSPAPER</span></span><h3>신문 스크랩</h3><p>누군가 오려서 모아둔 기사들. 몇 개는 밑줄이 그어져 있다.</p><div aria-hidden="true" class="card-preview press-preview">
+<div class="press-date">DAILY RECORD · ARCHIVE CUTTINGS</div>
+<b>현직 의원, 반려 인간과<br/>‘연인 관계’ 충격</b>
+<span>인간은 즉시 격리 · 15년 전 사회면</span>
+<i>“현재 소재는 공개되지 않았다.”</i>
+</div><span class="file-open">OPEN DOCUMENT</span></button><div class="file-body"><img alt="신문 스크랩" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file03.webp"/></div></article>
+<article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 04 · MONTHLY COMPANION</span><span>MAGAZINE</span></span><h3>월간 반려 — 생활 칼럼</h3><p>수인 독자를 위한 반려 생활 잡지. 다정한 조언 사이로 이 사회가 인간을 어떻게 보는지 드러난다.</p><div aria-hidden="true" class="card-preview magazine-preview">
+<div class="magazine-mast">MONTHLY <strong>伴侶</strong> / 생활과 반려</div>
+<div class="magazine-headline">종족별로 다른<br/><b>‘인간 사랑법’</b></div>
+<div class="magazine-columns"><span></span><span></span><span></span><span></span><span></span></div>
+<small>THIS MONTH · LIFESTYLE / READERS' VOICE</small>
+</div><span class="file-open">OPEN DOCUMENT</span></button><div class="file-body"><img alt="월간 반려 — 생활 칼럼" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file04.webp"/></div></article>
+<article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 05 · AUCTION / SHELTER</span><span>CATALOGUE</span></span><h3>경매 카탈로그 &amp; 보호소 공고</h3><p>시립 공매장 출품 목록과 보호소 입양 공고. 사람을 물건처럼 분류하는 인쇄 양식.</p><div aria-hidden="true" class="card-preview auction-preview">
+<div class="auction-top"><b>CITY AUCTION</b><span>114TH SESSION</span></div>
+<div class="auction-mini-row"><b>LOT 024</b><span>B</span><em>교정 수료</em></div>
+<div class="auction-mini-row"><b>LOT 027</b><span>C</span><em>이력 불명 · 온순함</em></div>
+<div class="auction-mini-row"><b>LOT 030</b><span>D</span><em>재출품 · 야간 울음</em></div>
+</div><span class="file-open">OPEN DOCUMENT</span></button><div class="file-body"><img alt="경매 카탈로그 &amp; 보호소 공고" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file05.webp"/></div></article>
+</div></section>
+<section class="file-section" data-group="restricted"><div class="file-section-head"><h2>열람 제한 자료</h2><span>RESTRICTED / FILE 06</span></div><div class="file-grid"><article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 06 · INVESTIGATION BUREAU</span><span>CLASSIFIED</span></span><h3>금기 행위 조사 서류</h3><p>이종교감 조사국 내부 서류 한 묶음. 신고서와 체크리스트, 격리 통지서. 일부는 검게 지워져 있다.</p><div aria-hidden="true" class="card-preview classified-preview">
+<div class="classified-stamp">CLASSIFIED</div>
+<small>IC-████ / FIELD REPORT</small>
+<b>INTERSPECIES<br/>CONDUCT INVESTIGATION</b>
+<span>신고 접수　→　현장 조사　→　즉시 분리</span>
+<i>████████████████</i>
+</div><span class="file-open">UNSEAL FILE</span></button><div class="file-body"><img alt="금기 행위 조사 서류" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file06.webp"/></div></article></div></section>
+<section class="file-section" data-group="sealed"><div class="file-section-head"><h2>봉인된 자료</h2><span>SEALED / FILE 07</span></div><div class="file-grid"><article class="archive-file"><button class="file-toggle"><span class="file-meta"><span>FILE 07 · CORRECTION INSTITUTE</span><span>COMING SOON</span></span><h3>인간 교정원 안내 브로셔</h3><p>일부 페이지만 남아 있는 교정원 홍보물. 나머지는 찢겨 있다.</p><div aria-hidden="true" class="card-preview institute-preview">
+<div class="institute-seal">HCI</div>
+<small>HUMAN CORRECTION INSTITUTE</small>
+<b>말 잘 듣는 아이로,<br/>사랑받는 아이로.</b>
+<span>12 WEEKS · RESIDENTIAL PROGRAM</span>
+<em>ENROLLMENT BROCHURE / FRAGMENT 01</em>
+</div><span class="file-open">PREVIEW FRAGMENT</span></button><div class="file-body"><img alt="인간 교정원 안내 브로셔" class="archive-document-image" decoding="async" loading="lazy" src="assets/archive_file07.webp"/></div></article></div></section>
+<section class="file-section"><div class="file-section-head"><h2>용어 사전</h2><span>GLOSSARY / INDEX</span></div><div class="glossary glossary-add">
+<div class="glossary-item"><b>반려인간보호법</b><p>인간의 생명권과 보호자 등록 의무 등을 규정한 법.</p></div>
+<div class="glossary-item"><b>이종교감금지법</b><p>수인과 인간의 연애를 금지하는 법.</p></div>
+<div class="glossary-item"><b>인간보호청</b><p>인간 등록과 보호 관련 행정 업무를 담당하는 기관.</p></div>
+<div class="glossary-item"><b>유찰</b><p>경매에서 낙찰되지 않는 것. D등급에 흔하다.</p></div>
+<div class="glossary-item"><b>보호 기한</b><p>보호소 수용 후 공매까지의 90일.</p></div>
+<div class="glossary-item"><b>그랑 휴먼 쇼</b><p>매년 열리는 인간 품평회.</p></div>
+<div class="glossary-item"><b>커튼족</b><p>금기를 어기고 몰래 관계를 이어가는 이들을 부르는 은어.</p></div>
+<div class="glossary-item"><b>격리 시설</b><p>금기 행위 조사 등으로 분리된 인간을 수용하는 시설.</p></div>
+<div class="glossary-item"><b>경매장</b><p>등록된 인간의 소유권 이전을 위한 경매가 진행되는 장소.</p></div>
+<div class="glossary-item"><b>교정 수료</b><p>인간 교정원의 교육 과정을 마쳤음을 증명하는 인증.</p></div>
+<div class="glossary-item"><b>보호소</b><p>보호자가 없는 인간을 일정 기간 보호하고 입양을 연결하는 시설.</p></div>
+<div class="glossary-item"><b>인간 교정원</b><p>등급과 관계없이 보호자가 원하면 보낼 수 있는 기숙 학교.</p></div>
+<div class="glossary-item"><b>인식표</b><p>칩이 내장된 인간 등록 표식. 색으로 등급을 나타낸다.</p></div>
+<div class="glossary-item"><b>펫캠</b><p>반려 인간의 생활 상태를 확인하기 위해 설치하는 관찰 카메라.</p></div>
+<div class="glossary-item"><b>품종 인증서</b><p>인간의 품종 및 등록 정보를 증명하는 문서.</p></div>
+<div class="glossary-item"><b>인간 등급</b><p>혈통·건강·훈련·파양 이력 등을 기준으로 구분하는 등급.</p></div>
+<div class="glossary-item"><b>안정제</b><p>분리불안 증상을 가라앉히기 위해 동물병원에서 처방되는 약.</p></div>
+</div></section>
+</div><section class="file-section"><div class="wrap"><div class="file-section-head"><h2>업데이트 기록</h2><span>UPDATE LOG / 2026</span></div>
+<div class="paper"><div class="paper-kicker">ARCHIVE RELEASE NOTES</div><h4>2026.11 · 애완인간 유니버스 아카이브 오픈</h4>
+<ul><li>애완인간 유니버스 아카이브 오픈</li><li>카르도 편 리마스터 공개</li><li>캐릭터 3인 등록</li><li>인간 생활 자료실 공개</li></ul></div></div></section>
+</main><footer class="footer"><div class="wrap footer-inner"><div class="footer-brand">애완인간<small>P E T   H U M A N</small></div><div class="footer-col"><small>PRINTED ARCHIVE</small><p>PUBLIC DOCUMENTS<br/>RESTRICTED FILES<br/>SEALED RECORDS<br/>GLOSSARY</p></div><div class="footer-thanks">Stay within<br/>the lines.</div></div></footer>
+<script src="site.js"></script><div aria-hidden="true" class="archive-modal" id="archiveModal">
+<div class="archive-modal-backdrop" data-modal-close=""></div>
+<section aria-labelledby="archiveModalTitle" aria-modal="true" class="archive-modal-panel" role="dialog">
+<header class="archive-modal-head">
+<div><small id="archiveModalMeta">ARCHIVE DOCUMENT</small><h2 id="archiveModalTitle">Document title</h2></div>
+<button aria-label="문서 닫기" class="archive-modal-close" data-modal-close="" type="button">×</button>
+</header>
+<div class="archive-modal-content" id="archiveModalContent"></div>
+</section>
+</div><script>
+let lastArchiveTrigger = null;
+
+document.querySelectorAll('.file-toggle').forEach((button)=>{
+  button.addEventListener('click',()=>{
+    const card=button.closest('.archive-file');
+    const modal=document.getElementById('archiveModal');
+    const title=button.querySelector('h3')?.textContent.trim() || 'Archive document';
+    const meta=button.querySelector('.file-meta')?.textContent.replace(/\s+/g,' ').trim() || 'ARCHIVE DOCUMENT';
+    const source=card.querySelector('.file-body');
+    lastArchiveTrigger=button;
+    document.getElementById('archiveModalTitle').textContent=title;
+    document.getElementById('archiveModalMeta').textContent=meta;
+    document.getElementById('archiveModalContent').innerHTML=source.innerHTML;
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    modal.querySelector('.archive-modal-content').scrollTop=0;
+    modal.querySelector('.archive-modal-close').focus();
+  });
+});
+
+function closeArchiveModal(){
+  const modal=document.getElementById('archiveModal');
+  if(!modal || !modal.classList.contains('is-open')) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.classList.remove('modal-open');
+  if(lastArchiveTrigger){
+    lastArchiveTrigger.focus();
+    lastArchiveTrigger=null;
+  }
+}
+
+/* Delegated close handler remains reliable even if modal markup is moved. */
+document.addEventListener('click',(event)=>{
+  const target=event.target;
+  if(target instanceof Element && target.closest('[data-modal-close]')){
+    closeArchiveModal();
+  }
+});
+
+document.addEventListener('keydown',(event)=>{
+  if(event.key==='Escape') closeArchiveModal();
+});
+
+document.querySelectorAll('.archive-tabs button').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('.archive-tabs button').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  const filter=b.dataset.filter;
+  document.querySelectorAll('[data-group]').forEach(section=>{
+    section.style.display=(filter==='all'||section.dataset.group===filter)?'':'none';
+  });
+}));
+</script></body></html>

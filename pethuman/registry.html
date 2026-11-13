@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f8f7f9"><title>HUMAN REGISTRY — 애완인간</title><link rel="stylesheet" href="style.css">
+<style>
+/* HUMAN CARE BUREAU — editorial inquiry form */
+.registry-page{background:#242126;padding:38px 24px 70px;color:#211f22}
+.registry-sheet{width:min(1240px,100%);margin:0 auto;padding:34px 48px 26px;background-color:#e7e8e6;background-image:radial-gradient(rgba(25,25,25,.095) .55px,transparent .75px),linear-gradient(135deg,rgba(255,255,255,.38),transparent 42%,rgba(130,126,134,.07));background-size:5px 5px,100% 100%;border:1px solid rgba(255,255,255,.65);box-shadow:0 20px 65px rgba(0,0,0,.28);position:relative;isolation:isolate}
+.registry-sheet:before{content:"";position:absolute;inset:11px;border:1px solid rgba(38,36,40,.13);pointer-events:none;z-index:-0}
+.registry-sheet>*{position:relative;z-index:1}
+.reg-masthead{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;border-bottom:1px solid #a9a8a6;padding:0 0 16px;margin-bottom:32px;color:#373339}
+.reg-brand{display:flex;align-items:center;gap:12px;font-family:Georgia,serif;font-weight:700;font-size:18px;letter-spacing:.02em}
+.reg-brand-mark{width:39px;height:39px;border:1px solid #413a43;border-radius:50%;display:grid;place-items:center;font:700 14px Georgia;color:#503c55}
+.reg-brand small{display:block;font:9px/1.4 Arial,sans-serif;letter-spacing:.12em;color:#625b63}
+.reg-masthead-center{font:10px/1.5 'Courier New',monospace;letter-spacing:.16em;text-align:center;text-transform:uppercase}
+.reg-masthead-right{text-align:right;font:10px/1.6 'Courier New',monospace;letter-spacing:.1em;color:#665d66}
+.reg-title-block{display:grid;grid-template-columns:minmax(0,1fr) 205px;gap:30px;align-items:end;padding:0 0 25px;border-bottom:1px solid #b9b8b6}
+.reg-kicker{font:700 10px/1.5 'Courier New',monospace;letter-spacing:.19em;color:#785c7f;text-transform:uppercase}
+.reg-hero h1{font-size:clamp(36px,5vw,62px);line-height:1.12;letter-spacing:-.065em;margin:12px 0 13px;font-weight:900;color:#1e1c20}
+.reg-hero p{font-size:13px;line-height:1.9;color:#5f5b60;max-width:760px;margin:0}
+.reg-meta-stamp{justify-self:end;align-self:center;border:2px solid #92575b;color:#92575b;padding:9px 14px;font:700 11px/1.5 'Courier New',monospace;letter-spacing:.1em;text-align:center;transform:rotate(-4deg)}
+.grade-index{display:grid;grid-template-columns:155px repeat(5,minmax(0,1fr));align-items:center;border-bottom:1px solid #b9b8b6;padding:14px 0 17px;gap:0}
+.grade-index-title{font:700 9px/1.5 'Courier New',monospace;letter-spacing:.13em;color:#625c64}
+.grade-chip{display:grid;grid-template-columns:34px 1fr;gap:8px;align-items:center;padding:2px 10px;border-left:1px solid #c6c3c5;min-height:48px;background:transparent;text-align:left}
+.grade-chip img{width:32px;height:42px;object-fit:contain;grid-row:span 2}
+.grade-chip b{font:700 17px Georgia;color:#29242c;align-self:end}
+.grade-chip small{font:9px/1.35 Arial,sans-serif;color:#6d6870;align-self:start}
+.reg-layout{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(290px,.72fr);gap:36px;align-items:start;padding:30px 0 24px}
+.game-panel,.document-panel{border:0;background:transparent;min-width:0}
+.panel-head{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #9e9b9d;padding:0 0 12px;margin-bottom:20px;color:#302b32}
+.panel-head b{font:700 11px/1.3 'Courier New',monospace;letter-spacing:.12em}
+.panel-head small{font:10px/1.3 'Courier New',monospace;letter-spacing:.12em;color:#795f80}
+.panel-inner{padding:0}
+#startView>.chapter-label,.chapter-label{font:700 10px/1.5 'Courier New',monospace;letter-spacing:.16em;color:#76517d;text-transform:uppercase}
+.question-title{font-size:clamp(25px,3vw,36px);line-height:1.35;letter-spacing:-.055em;margin:13px 0 20px;color:#211e23}
+#startView>p{font:12px/1.85 Arial,sans-serif!important;color:#69636b!important;max-width:540px}
+.start-form{display:grid;grid-template-columns:1fr 1fr;gap:13px 18px;margin-top:23px}
+.start-form label{display:block;font:700 10px 'Courier New',monospace;letter-spacing:.09em;color:#635b65;margin:0 0 7px}
+.start-form label:nth-of-type(3){grid-column:1/-1}
+.start-form input{width:100%;padding:12px 5px;border:0;border-bottom:1px solid #918b91;background:rgba(255,255,255,.23);font:14px Arial,sans-serif;color:#272229;border-radius:0;outline:none}
+.start-form input:focus{border-bottom:2px solid #715076;background:rgba(255,255,255,.48)}
+.primary-btn,.secondary-btn{border:1px solid #29242c;padding:12px 17px;font:700 11px/1.3 'Courier New',monospace;letter-spacing:.08em;cursor:pointer;text-transform:uppercase;transition:background .16s,color .16s,border-color .16s}
+.primary-btn{background:#29242c;color:#f5f1ec}.primary-btn:hover{background:#654b6d;border-color:#654b6d}
+.secondary-btn{background:transparent;color:#343038;border-color:#aaa4a8}.secondary-btn:hover{background:#d9d4d9}
+.start-form .primary-btn{grid-column:1/-1;width:100%;margin-top:9px;padding:15px}
+.progress{height:5px;background:#c9c6c8;margin:0 0 22px;position:relative}.progress span{display:block;height:100%;background:#74527d;width:0;transition:width .2s}
+.question-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.chapter-label{font-size:10px}.question-count{font:10px 'Courier New',monospace;color:#827c84;letter-spacing:.08em}
+.question-title#questionTitle{font-size:clamp(26px,3.2vw,39px);margin:10px 0 20px;max-width:640px}
+.choices{display:grid;gap:0;border-top:1px solid #aaa6a9;counter-reset:answer}
+.choice{counter-increment:answer;width:100%;display:grid;grid-template-columns:38px minmax(0,1fr) 26px;gap:10px;align-items:center;text-align:left;border:0;border-bottom:1px solid #aaa6a9;background:transparent;padding:15px 10px;font:14px/1.55 Arial,sans-serif;color:#343037;cursor:pointer;transition:background .15s,color .15s;min-height:54px}
+.choice:before{content:counter(answer,decimal-leading-zero);font:11px 'Courier New',monospace;letter-spacing:.08em;color:#806d83}
+.choice:after{content:"□";font:17px Arial,sans-serif;color:#756d76;text-align:center}
+.choice:hover{background:rgba(255,255,255,.43)}
+.choice.selected,.choice[aria-pressed="true"]{background:#d5c9d9;color:#2c2031;font-weight:700;box-shadow:inset 4px 0 0 #76547d}
+.choice.selected:after,.choice[aria-pressed="true"]:after{content:"■";color:#62436c}
+.choice:focus-visible,.primary-btn:focus-visible,.secondary-btn:focus-visible{outline:2px solid #76528a;outline-offset:2px}
+.game-controls{display:flex;justify-content:space-between;gap:10px;margin-top:24px;padding-top:15px;border-top:1px solid #b7b2b6}
+.game-controls button:disabled{opacity:.35;cursor:not-allowed}
+.document-panel{border-left:1px solid #b7b2b6;padding-left:26px}
+.document-panel .panel-head{border-bottom:1px solid #b7b2b6}
+.paper-form{background:rgba(248,248,245,.57);border:1px solid #aaa7a5;padding:20px 18px;color:#302c31;min-height:430px;position:sticky;top:100px;box-shadow:3px 4px 0 rgba(40,35,40,.08)}
+.paper-top{display:flex;justify-content:space-between;gap:10px;align-items:start;border-bottom:1px solid #aaa5a8;padding-bottom:12px;margin-bottom:17px}
+.paper-top b{font:700 16px Georgia,serif;letter-spacing:.08em}.paper-top small{font:9px 'Courier New',monospace;letter-spacing:.1em;text-align:right}
+.paper-form h3{font-size:15px;margin:0 0 16px;letter-spacing:-.02em}
+.paper-line{display:grid;grid-template-columns:78px minmax(0,1fr);gap:0;align-items:stretch;padding:0;margin:0 0 7px;font-size:10px;line-height:1.5;min-height:31px}
+.paper-line span:first-child{display:flex;align-items:center;padding:7px 8px;background:rgba(119,85,128,.11);border:1px solid rgba(119,85,128,.22);color:#5b4761;font:700 9px 'Courier New',monospace}
+.handwrite{display:flex;align-items:center;min-height:31px;padding:6px 9px;background:rgba(255,255,255,.63);border:1px solid #c4bec4;border-left:3px solid #8b7192;font:13px/1.5 'Nanum Pen Script','Bradley Hand',cursive;color:#47374d;overflow-wrap:anywhere;box-sizing:border-box}
+.paper-line.paper-ident .handwrite{background:#e6dfe8;border-color:#c4b6c9;border-left-color:#73547b;font-weight:700}
+.paper-form .paper-line.is-filled span:first-child{background:#d5c8d9;border-color:#b9a8be;color:#382b3f}
+.paper-form .paper-line.is-filled .handwrite{background:#e7dfea;border-color:#c1b2c7;border-left-color:#74547d;color:#33283a;font-weight:700}
+.paper-form.completed{background:#e4dce7;border-color:#9d8ba4;box-shadow:4px 5px 0 rgba(47,35,51,.12)}
+.paper-form.completed .paper-top{border-color:#a99aad}
+.paper-form.completed .paper-line span:first-child{background:#72547b;border-color:#62466b;color:#fff}
+.paper-form.completed .handwrite{background:#f8f5f8;border-color:#c9bdcd;border-left-color:#684875;color:#302438}
+.paper-approval{margin:18px 0 0;padding:10px 12px;background:#312b33;color:#f5eff6;text-align:center;font:700 10px 'Courier New',monospace;letter-spacing:.14em}
+.paper-note{font:9px/1.7 Arial,sans-serif;color:#777078;margin-top:13px}
+.result{display:none}.result-card{background:rgba(250,249,246,.62);border:1px solid #aaa3a8;padding:22px;position:relative;box-shadow:3px 4px 0 rgba(40,35,40,.08)}
+.result-card h2{font:700 18px Georgia,serif;margin:0 0 15px;letter-spacing:.06em;border-bottom:1px solid #aaa3a8;padding-bottom:12px}
+.result-main{display:grid;grid-template-columns:115px 1fr;gap:18px;align-items:center}
+.result-tag{width:100%;height:120px;object-fit:contain}.result-grade{font:700 54px Georgia;color:#76527d}
+.result-info{font:12px/1.9 Arial,sans-serif}.approval-stamp{display:inline-block;border:2px solid #99575a;color:#99575a;padding:7px 12px;transform:rotate(-4deg);font:700 10px 'Courier New',monospace;letter-spacing:.1em;margin:18px 0 4px}
+.opinion{font:12px/1.8 Arial,sans-serif;border-top:1px solid #aaa3a8;padding-top:13px;margin-top:13px}
+.result-hint{font:11px/1.7 Arial,sans-serif;color:#66616a;margin:14px 0}
+.result-heading{font:700 10px 'Courier New',monospace;letter-spacing:.11em;margin:18px 0 8px;padding:8px 0;border-top:1px solid #aaa3a8;border-bottom:1px solid #aaa3a8;color:#5c4664}
+#resultView .usernote{width:100%;min-height:190px;resize:vertical;border:1px solid #aaa3a8;background:rgba(250,249,246,.7);padding:14px;font:12px/1.8 'Courier New',monospace;color:#302934}
+.note-count{font:10px 'Courier New',monospace;text-align:right;margin:7px 0 13px;color:#756d77}.note-count.warn{color:#a52f3a;font-weight:800}
+.result-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}.result-actions .primary-btn{flex:1}
+.reg-layout.is-complete{grid-template-columns:minmax(0,1.15fr) minmax(285px,.85fr);align-items:start}
+.reg-layout.is-complete .document-panel{border-left-color:#8e7a94}.reg-layout.is-complete #resultView{animation:registryReveal .35s ease-out}
+.reg-layout.is-complete .document-panel .panel-head{color:#57415f}
+#resultView .result-card{background:#eee9ee;border-color:#9e8ea2}
+#resultView{scroll-margin-top:112px}
+@keyframes registryReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.registry-bottomline{display:flex;justify-content:space-between;gap:20px;border-top:1px solid #aaa6a8;padding-top:12px;margin-top:10px;font:9px/1.5 'Courier New',monospace;letter-spacing:.08em;color:#625d64}
+.registry-bottomline span:last-child{text-align:right}
+@media(max-width:900px){.registry-page{padding:24px 16px 45px}.registry-sheet{padding:28px 28px 22px}.reg-layout{grid-template-columns:1fr;gap:28px}.document-panel{border-left:0;border-top:1px solid #b7b2b6;padding:24px 0 0}.paper-form{position:static;min-height:0}.grade-index{grid-template-columns:repeat(5,minmax(0,1fr));row-gap:8px}.grade-index-title{grid-column:1/-1;padding-bottom:5px}.reg-layout.is-complete{grid-template-columns:1fr}}
+@media(max-width:560px){.registry-page{padding:14px 8px 30px}.registry-sheet{padding:22px 16px 18px}.reg-masthead{grid-template-columns:1fr auto;gap:10px;margin-bottom:22px}.reg-masthead-center{display:none}.reg-brand{font-size:15px}.reg-brand-mark{width:32px;height:32px}.reg-masthead-right{font-size:8px}.reg-title-block{grid-template-columns:1fr;gap:14px;padding-bottom:18px}.reg-hero h1{font-size:35px}.reg-hero p{font-size:11px}.reg-meta-stamp{justify-self:start;font-size:9px;padding:6px 9px;transform:none}.grade-index{gap:0;padding:11px 0 13px}.grade-chip{grid-template-columns:1fr;justify-items:center;text-align:center;gap:2px;padding:4px 2px;min-height:0}.grade-chip img{width:24px;height:31px;grid-row:auto}.grade-chip b{font-size:14px}.grade-chip small{font-size:8px;line-height:1.25}.panel-head{margin-bottom:16px}.panel-head b{font-size:9px}.panel-head small{font-size:8px}.question-title#questionTitle{font-size:27px}.choice{grid-template-columns:29px minmax(0,1fr) 20px;padding:13px 5px;font-size:12px}.start-form{grid-template-columns:1fr;gap:11px}.start-form label:nth-of-type(3){grid-column:auto}.start-form .primary-btn{grid-column:auto}.paper-form{padding:16px 13px}.paper-line{grid-template-columns:72px minmax(0,1fr)}.result-main{grid-template-columns:90px 1fr;gap:12px}.result-tag{height:95px}.result-grade{font-size:44px}.result-actions button{flex:1 1 42%}.registry-bottomline{font-size:7px}}
+</style></head><body>
+<header class="site-header"><div class="header-inner"><a class="brand" href="index.html" aria-label="애완인간 홈"><img src="assets/logo_pet_human_header.png" alt="애완인간 PET HUMAN"></a><button class="mobile-toggle" type="button" aria-expanded="false">MENU</button><nav class="nav"><a href="index.html">HOME</a><a href="world.html">WORLD</a><a href="series.html">SERIES</a><a href="characters.html">CHARACTERS</a><a href="archive.html">ARCHIVE</a><a href="registry.html" class="active">REGISTRY</a></nav><div class="header-code">HUMAN CARE BUREAU</div></div></header>
+<main class="registry-page">
+<div class="registry-sheet">
+  <div class="reg-masthead">
+    <div class="reg-brand"><span class="reg-brand-mark">HCB</span><span>인간보호청<small>HUMAN CARE BUREAU</small></span></div>
+    <div class="reg-masthead-center">REGISTRATION DIVISION<br>OFFICIAL INQUIRY FORM</div>
+    <div class="reg-masthead-right">FORM NO. 001<br>REV. 2026.11</div>
+  </div>
+  <section class="reg-hero">
+    <div class="reg-title-block">
+      <div>
+        <div class="reg-kicker">HUMAN CARE BUREAU / REGISTRATION DIVISION</div>
+        <h1>당신은 어떻게 살아왔나요?</h1>
+        <p>출생과 보호 이력, 생활 습관을 기록해 인간 등록 등급을 심사합니다. 아래 항목을 순서대로 선택해 주세요. 모든 응답은 최종 등록 서류에 반영됩니다.</p>
+      </div>
+      <div class="reg-meta-stamp">OFFICIAL<br>ASSESSMENT<br>1 MIN</div>
+    </div>
+    <div class="grade-index">
+      <div class="grade-index-title">CLASSIFICATION INDEX<br>등급 분류표</div>
+      <div class="grade-chip"><img src="assets/tag_S.webp" alt="S 등급 인식표"><b>S</b><small>최상급 인증 인간</small></div>
+      <div class="grade-chip"><img src="assets/tag_A.webp" alt="A 등급 인식표"><b>A</b><small>양호한 관리 이력</small></div>
+      <div class="grade-chip"><img src="assets/tag_B.webp" alt="B 등급 인식표"><b>B</b><small>일반 등록 인간</small></div>
+      <div class="grade-chip"><img src="assets/tag_C.webp" alt="C 등급 인식표"><b>C</b><small>추가 확인 필요</small></div>
+      <div class="grade-chip"><img src="assets/tag_D.webp" alt="D 등급 인식표"><b>D</b><small>재심사 대상</small></div>
+    </div>
+  </section>
+  <div class="registry-wrap reg-layout" id="registryLayout">
+    <section class="game-panel">
+      <div class="panel-head"><b>REGISTRATION ASSESSMENT</b><small id="panelState">APPLICATION FORM</small></div>
+      <div class="panel-inner">
+        <div id="startView">
+          <div class="chapter-label">01 / APPLICANT INFORMATION</div>
+          <h2 class="question-title">등록 정보를 입력해 주세요.</h2>
+          <p style="font-size:12px;line-height:1.8;color:#77717d">심사 결과는 선택한 답변에 따라 자동으로 작성됩니다. 이름·성별·나이는 등록증과 유저노트에 표시됩니다.</p>
+          <div class="start-form">
+            <div><label for="personName">01. 이름</label><input id="personName" maxlength="24" placeholder="이름 입력"></div>
+            <div><label for="personGender">02. 성별</label><input id="personGender" maxlength="12" placeholder="자유 입력"></div>
+            <div><label for="personAge">03. 나이 (만 20세 이상)</label><input id="personAge" type="number" min="20" max="120" placeholder="나이 입력"></div>
+            <button class="primary-btn" id="startBtn">신청서 작성 시작　→</button><p id="startMsg" style="grid-column:1/-1;margin:0;font:12px/1.6 Arial,sans-serif;color:#a52f3a" hidden></p>
+          </div>
+        </div>
+        <div id="questionView" hidden>
+          <div class="progress"><span id="progressBar"></span></div>
+          <div class="question-meta"><span class="chapter-label" id="chapterLabel"></span><span class="question-count" id="questionCount"></span></div>
+          <h2 class="question-title" id="questionTitle"></h2>
+          <div class="choices" id="choices"></div>
+          <div class="game-controls"><button class="secondary-btn" id="prevBtn">← 이전 항목</button><button class="primary-btn" id="nextBtn" disabled>다음 항목　→</button></div>
+        </div>
+        <div id="resultView" class="result">
+          <div class="chapter-label">ASSESSMENT COMPLETE / FINAL COPY</div>
+          <h2 class="question-title">인간 등록 심사가 완료되었습니다.</h2>
+          <div class="result-heading">01 — COMPLETED REGISTRATION CERTIFICATE</div>
+          <div class="result-card" id="certificate">
+            <h2>HUMAN REGISTRATION CERTIFICATE</h2>
+            <div class="result-main"><img class="result-tag" id="resultTag" src="assets/tag_B.webp" alt="인식표"><div><div class="result-grade" id="resultGrade">B</div><div class="result-info" id="resultInfo"></div></div></div>
+            <div class="opinion" id="opinion"></div><div class="approval-stamp">인간보호청 심사 완료</div><div style="font:9px 'Courier New',monospace;text-align:right">HUMAN CARE BUREAU · REGISTRY DIVISION</div>
+          </div>
+          <p class="result-hint">아래 유저노트를 복사해 크랙 프로필에 붙여넣을 수 있습니다.</p>
+          <div class="result-heading">02 — CRACK USER NOTE</div>
+          <textarea class="usernote" id="userNote" maxlength="1200" readonly></textarea>
+          <div class="note-count" id="noteCount">0자 / 권장 300자 이내</div>
+          <div id="savedWrap" hidden style="margin-top:14px"><p class="result-hint" style="margin:0 0 8px">이미지를 길게 누르거나 우클릭해서 저장하세요.</p><img id="savedImg" alt="등록증 이미지" style="width:100%;border:1px solid #aaa3a8"></div><p id="playMsg" class="result-hint" hidden>크랙 플레이 링크는 준비 중입니다.</p><div class="result-actions"><button class="primary-btn" id="copyBtn">유저노트 복사</button><button class="secondary-btn" id="saveBtn">이미지 저장</button><button class="secondary-btn" id="playBtn">크랙에서 플레이</button><button class="secondary-btn" id="restartBtn">다시 하기</button></div>
+        </div>
+      </div>
+    </section>
+    <aside class="document-panel">
+      <div class="panel-head"><b>REGISTRATION RECORD</b><small id="documentState">LIVE DOCUMENT</small></div>
+      <div class="panel-inner">
+        <div class="paper-form" id="livePaper">
+          <div class="paper-top"><b>人間 登錄 審査</b><small>HCB / HR-APPLICATION</small></div>
+          <h3>인간 등록 심사 서류</h3>
+          <div class="paper-line"><span>이름</span><span class="handwrite" id="liveName">미기재</span></div>
+          <div class="paper-line"><span>성별 / 나이</span><span class="handwrite" id="liveDemographic">—</span></div>
+          <div class="paper-line paper-ident"><span>등록 번호</span><span class="handwrite" id="liveRegistration">심사 대기</span></div>
+          <div class="paper-line paper-ident"><span>최종 등급</span><span class="handwrite" id="liveClassification">미정</span></div>
+          <div id="liveAnswers"></div>
+          <div class="paper-approval" id="liveApproval" hidden>HUMAN CARE BUREAU · 심사 완료</div>
+          <div class="paper-note" id="livePaperNote">※ 본 서류는 인간보호청 등록 심사용 내부 양식입니다. 답변을 선택하면 해당 항목이 서류에 기록됩니다.</div>
+        </div>
+      </div>
+    </aside>
+  </div>
+  <div class="registry-bottomline"><span>HUMAN CARE BUREAU · REGISTRATION DIVISION</span><span>CONFIDENTIAL RECORD　 /　 HCB–001</span></div>
+</div>
+</main><footer class="footer"><div class="wrap footer-inner"><div class="footer-brand">애완인간<small>P E T&nbsp;&nbsp; H U M A N</small></div><div class="footer-col"><small>HUMAN REGISTRY</small><p>APPLICATION<br>ASSESSMENT<br>CLASSIFICATION</p></div><div class="footer-thanks">Your record<br>remains.</div></div></footer>
+<script>
+const Q=[
+{ch:1,label:"CHAPTER 1 · 출생 기록",title:"당신은 어디서 태어났나요?",a:[["인증 번식장",3,"번식장 출생"],["평범한 가정",1,"가정 출생"],["보호소",0,"보호소 출생"],["길거리",-1,"길거리 출생"],["밀매 조직의 우리 안",-2,"밀매 조직 출신"],["기억나지 않는다",-1,"출생 불명"]],key:"출신"},
+{ch:1,label:"CHAPTER 1 · 출생 기록",title:"어린 시절은 어디서 보냈나요?",a:[["인간 유치원",1,"유치원 졸업"],["주인 집 거실",0,"집에서 자람"],["보호소 철창",-1,"보호소에서 자람"],["인간 쇼 연습실",2,"쇼 훈련을 받음"],["여기저기 떠돌며",-1,"떠돌며 자람"]],key:"어린 시절"},
+{ch:2,label:"CHAPTER 2 · 첫 번째 주인",title:"첫 주인은 어떤 수인이었나요?",a:[["전 주인 없음 — 이번 경매가 첫 소유 등록",0,"전 주인 없음 · 이번 경매가 첫 등록"],["도베르만·늑대 같은 개과",0,"개과"],["고양이·사자 같은 고양잇과",0,"고양잇과"],["곰",0,"곰"],["뱀 같은 파충류",0,"파충류"],["토끼·사슴 같은 초식 수인",0,"초식 수인"]],key:"첫 주인 종족"},
+{ch:2,label:"CHAPTER 2 · 첫 번째 주인",title:"그 주인은 당신을 어떻게 대했나요?",a:[["다정하고 따뜻했다",1,"다정했던"],["엄격했지만 공정했다",1,"엄격했던"],["바빠서 늘 집이 비어 있었다",0,"무관심했던"],["나를 장식품처럼 자랑했다",0,"나를 자랑만 하던"],["방치하고 학대했다",-1,"나를 학대한"],["나를 연인처럼 대했다",0,"나를 연인처럼 대한"]],key:"첫 주인"},
+{ch:2,label:"CHAPTER 2 · 첫 번째 주인",title:"그 집에서 당신은 어디서 잤나요?",a:[["케이지 안",0,"케이지에서 잠"],["주인 침대 발치",0,"주인 침대 발치에서 잠"],["거실 소파",0,"소파에서 잠"],["창고나 베란다",0,"창고에서 잠"],["방 하나를 통째로",0,"방을 따로 받음"]],key:"잠자리"},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"첫 주인과는 어떻게 헤어졌나요?",a:[["파양당했다",-1,"파양됨"],["주인이 세상을 떠났다",0,"주인과 사별"],["주인이 파산했다",0,"주인 파산으로 처분됨"],["금기가 발각돼 강제로 떨어졌다",-1,"금기 발각으로 강제 분리됨"],["밀매 조직에 납치됐다",-1,"납치 후 구조됨"],["버려졌다",-2,"유기됨"]],key:"이별",branch:true},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"파양된 이유는 무엇인가요?",branchFor:"파양당했다",a:[["말을 안 들어서",0,"말을 안 들어서"],["병이 나서",0,"병이 나서"],["주인이 새 인간을 들여서",0,"새 인간에게 밀려"],["이유를 모른다",0,"이유도 모른 채"]],key:"추가 사유"},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"그 주인을 지금은 어떻게 생각하나요?",branchFor:"금기가 발각돼 강제로 떨어졌다",a:[["아직 그리워한다",0,"아직 그리워함"],["원망한다",0,"원망함"],["잊으려 한다",0,"잊으려 함"]],key:"추가 감정"},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"어떻게 빠져나왔나요?",branchFor:"밀매 조직에 납치됐다",a:[["특수부대가 구해줬다",0,"특수부대에 구조됨"],["스스로 도망쳤다",0,"스스로 탈출함"]],key:"탈출"},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"경매장에서 몇 번 만에 팔렸나요?",a:[["한 번에 낙찰",1,"경매 즉시 낙찰"],["한두 번 유찰",0,"유찰 1~2회"],["셀 수 없이 유찰",-2,"유찰 다수"]],key:"경매"},
+{ch:3,label:"CHAPTER 3 · 이별과 경매",title:"인간 교정원에 다닌 적이 있나요?",a:[["수료했다",2,"교정원 수료"],["다니다 쫓겨났다",-1,"교정원 퇴학"],["도망쳤다",-2,"교정원 탈주"],["다닌 적 없다",0,""]],key:"교정원"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"지금의 당신은 어떤 인간인가요?",a:[["겁이 많고 눈치를 본다",0,"겁 많음"],["길들여질 생각이 없다",0,"반항적"],["해맑고 붙임성이 좋다",0,"해맑음"],["무표정하고 체념했다",0,"체념함"],["애교 많고 사랑받고 싶다",0,"애정결핍"],["말이 없고 조용히 관찰한다",0,"과묵함"],["잘 웃지만 속을 안 보인다",0,"속을 숨김"],["제멋대로고 장난이 심하다",0,"장난꾸러기"]],key:"성격"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"자기도 모르게 나오는 버릇이 있나요?",a:[["손톱을 물어뜯는다",0,"손톱 물어뜯기"],["잘 때 몸을 웅크린다",0,"웅크려 잠"],["목에 찬 인식표를 만지작거린다",0,"인식표 만지기"],["밥을 허겁지겁 먹는다",0,"허겁지겁 먹기"],["큰 소리에 몸이 굳는다",0,"큰 소리에 굳음"],["혼잣말을 한다",0,"혼잣말"]],key:"버릇"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"좋아하는 것은?",a:[["따뜻한 이불",0,"따뜻한 이불"],["단 간식",0,"단 간식"],["비 오는 소리",0,"비 오는 소리"],["햇볕 드는 창가",0,"햇볕"],["책",0,"책"],["누군가의 손길",0,"손길"]],key:"좋아하는 것"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"아무에게도 말하지 않은 것이 있나요?",a:[["목 뒤에 오래된 흉터가 있다",0,"목 뒤 흉터"],["칩을 억지로 뺀 자국이 있다",0,"칩 제거 흔적"],["전 주인의 물건을 몰래 갖고 있다",0,"전 주인의 물건"],["글을 아주 잘 읽고 쓴다",0,"글을 잘 앎"],["매일 밤 같은 악몽을 꾼다",0,"반복되는 악몽"],["아무것도 숨기지 않는다",0,""]],key:"비밀"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"수인을 어떻게 생각하나요?",a:[["믿고 싶다",0,"믿고 싶음"],["무섭다",0,"두려움"],["밉다",0,"증오"],["아무 감정 없다",0,"무관심"],["잘 모르겠다",0,"혼란"]],key:"수인에 대해"},
+{ch:4,label:"CHAPTER 4 · 지금의 당신",title:"새 주인에게 바라는 게 있다면?",a:[["굶기지만 않으면 된다",0,"굶기지만 않길"],["때리지만 않았으면",0,"때리지 않길"],["나를 이름으로 불러줬으면",0,"이름으로 불러주길"],["곁에 있어줬으면",0,"곁에 있어주길"],["나를 버리지만 않았으면",0,"버리지 않길"],["아무것도 바라지 않는다",0,""]],key:"새 주인에게"}
+];
+let person={},answers={},idx=0,score=0,grade="",note="",registrationId="";
+const $=id=>document.getElementById(id);
+function visibleQs(){const noPreviousOwner=answers[2]?.label==="전 주인 없음 — 이번 경매가 첫 소유 등록";return Q.filter((q,i)=>{if(noPreviousOwner&&[3,4,5].includes(i))return false;return !q.branchFor||answers[5]?.label===q.branchFor;});}
+function current(){return visibleQs()[idx]}
+function start(){const name=$("personName").value.trim(),gender=$("personGender").value.trim(),age=Number($("personAge").value);if(!name||!gender||!Number.isInteger(age)||age<20||age>120){$("startMsg").textContent="이름과 성별을 입력하고, 만 20세 이상의 나이를 입력해 주세요.";$("startMsg").hidden=false;return;}$("startMsg").hidden=true;person={name,gender,age};$("startView").hidden=true;$("questionView").hidden=false;$("panelState").textContent="IN PROGRESS";$("liveName").textContent=name;$("liveDemographic").textContent=gender+" / "+age+"세";render();}
+function render(){const qs=visibleQs(),q=qs[idx];if(!q){finish();return;} $("chapterLabel").textContent=q.label;$("questionCount").textContent=(idx+1)+" / "+qs.length;$("questionTitle").textContent=q.title;$("progressBar").style.width=((idx+1)/qs.length*100)+"%";$("choices").innerHTML="";q.a.forEach((a,i)=>{const b=document.createElement("button");b.className="choice";b.textContent=(i+1)+". "+a[0]+(answers[Q.indexOf(q)]?"":"");if(answers[Q.indexOf(q)]?.label===a[0]){b.classList.add("selected");b.setAttribute("aria-pressed","true");}b.onclick=()=>{const qIndex=Q.indexOf(q);if(qIndex===2&&answers[2]?.label!==a[0]){delete answers[3];delete answers[4];delete answers[5];delete answers[6];delete answers[7];delete answers[8];}if(qIndex===5&&answers[5]?.label!==a[0]){delete answers[6];delete answers[7];delete answers[8];}answers[qIndex]={label:a[0],score:a[1],note:a[2]};renderPaper();$("nextBtn").disabled=false;[...$("choices").children].forEach(x=>{x.classList.remove("selected");x.setAttribute("aria-pressed","false");});b.classList.add("selected");b.setAttribute("aria-pressed","true");};$("choices").appendChild(b);});$("prevBtn").disabled=idx===0;$("nextBtn").disabled=!answers[Q.indexOf(q)];renderPaper();}
+function renderPaper(){const container=$("liveAnswers");container.innerHTML="";Q.forEach((q,i)=>{const a=answers[i];if(!a)return;const line=document.createElement("div");line.className="paper-line is-filled";const k=document.createElement("span");k.textContent=q.key;const v=document.createElement("span");v.className="handwrite";v.textContent=a.label;line.append(k,v);container.append(line);});}
+$("startBtn").onclick=start;
+$("nextBtn").onclick=()=>{if(idx<visibleQs().length-1){idx++;render();}else finish();};
+$("prevBtn").onclick=()=>{if(idx>0){idx--;render();}};
+function finish(){score=Object.values(answers).reduce((n,a)=>n+a.score,0);grade=score>=6?"S":score>=3?"A":score>=0?"B":score>=-3?"C":"D";const opinions={S:"관리 상태 최상. 비공개 경매 추천 대상.",A:"양호한 이력. 일반 가정 입양에 적합.",B:"특이사항 없음. 표준 관리 권장.",C:"이력 확인 필요. 정기검진 철저히 할 것.",D:"재심사 대상. 교정원 상담을 권고함."};const id="HR-"+String(Math.floor(Math.random()*900000)+100000);registrationId=id;$("questionView").hidden=true;$("resultView").style.display="block";$("panelState").textContent="ASSESSMENT COMPLETE";$("resultGrade").textContent=grade;$("resultTag").src="assets/tag_"+grade+".webp";$("resultTag").alt=grade+"등급 인식표";$("resultInfo").innerHTML="등록번호: "+id+"<br>이름: "+esc(person.name)+"<br>성별: "+esc(person.gender)+"<br>나이: "+person.age+"세";$("opinion").textContent="심사관 소견: "+opinions[grade];note=makeNote();$("userNote").value=note;countNote();$("documentState").textContent="COMPLETED RECORD";$("registryLayout").classList.add("is-complete");$("liveRegistration").textContent=id;$("liveClassification").textContent=grade+"등급";$("livePaper").classList.add("completed");$("livePaper").querySelector(".paper-top b").textContent="人間 登錄 審査 · 完了";$("liveApproval").hidden=false;$("livePaperNote").textContent="※ 심사 완료 서류 · 등록번호와 등급이 확정되었으며, 아래 기록은 최종 응답을 바탕으로 작성되었습니다.";renderPaper();setTimeout(()=>document.getElementById("resultView").scrollIntoView({behavior:"smooth",block:"start"}),80);}
+function esc(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function get(i){return answers[i]?.note||""}
+function makeNote(){const lines=[`${person.name} / ${person.gender} / ${person.age}세 / ${grade}등급 인간`];const add=(label,val)=>{if(val)lines.push(label+": "+val)};add("출신",[get(0),get(1)].filter(Boolean).join(", "));const noPreviousOwner=answers[2]?.label==="전 주인 없음 — 이번 경매가 첫 소유 등록";let past=noPreviousOwner?"전 소유 이력 없음 · 이번 경매가 첫 등록":[get(2),get(3)?get(3)+" 첫 주인":"",get(4)].filter(Boolean).join(" ");let sep=noPreviousOwner?"":get(5);const branchIndex=answers[5]?.label==="파양당했다"?6:answers[5]?.label==="금기가 발각돼 강제로 떨어졌다"?7:answers[5]?.label==="밀매 조직에 납치됐다"?8:null;if(branchIndex!==null&&get(branchIndex))sep+="("+get(branchIndex)+")";if(past||sep)lines.push("과거: "+past+(past&&sep?" → ":"")+sep);add("이력",[get(9),get(10)].filter(Boolean).join(", "));add("성격",get(11));add("버릇",get(12));add("좋아하는 것",get(13));add("비밀",get(14));add("수인에 대해",get(15));add("새 주인에게",get(16));lines.push(noPreviousOwner?"이번 경매에서 카르도에게 처음으로 낙찰되어 그의 집에 왔다.":"경매장에서 카르도에게 낙찰되어 그의 집에 왔다.");return lines.join("\n");}
+function countNote(){const n=$("userNote").value.length;$("noteCount").textContent=n+"자 / 권장 300자 이내";$("noteCount").classList.toggle("warn",n>300);}
+$("copyBtn").onclick=async()=>{try{await navigator.clipboard.writeText($("userNote").value);$("copyBtn").textContent="복사 완료";}catch(e){$("userNote").select();try{document.execCommand("copy");$("copyBtn").textContent="복사 완료";}catch(_){$("copyBtn").textContent="길게 눌러 복사하세요";}}};
+$("saveBtn").onclick=()=>{const c=document.createElement("canvas");c.width=1200;c.height=1120;const x=c.getContext("2d");x.fillStyle="#f5f0f6";x.fillRect(0,0,c.width,c.height);x.fillStyle="#382840";x.fillRect(0,0,c.width,120);x.fillStyle="#fff";x.font="bold 30px Georgia";x.fillText("HUMAN CARE BUREAU",58,58);x.font="16px sans-serif";x.fillText("HUMAN REGISTRATION CERTIFICATE",58,88);x.fillStyle="#fff";x.fillRect(48,150,1104,410);x.strokeStyle="#cbbbd4";x.lineWidth=3;x.strokeRect(48,150,1104,410);x.fillStyle="#76528a";x.font="bold 150px Georgia";x.fillText(grade,95,365);x.fillStyle="#382840";x.font="bold 34px sans-serif";x.fillText(person.name+" / "+person.gender+" / "+person.age+"세",330,245);x.font="24px sans-serif";x.fillText("REGISTRATION NO. "+registrationId,330,300);x.font="22px sans-serif";x.fillText("심사관 소견",330,375);x.font="20px sans-serif";wrapCanvasText(x,$("opinion").textContent.replace("심사관 소견: ",""),330,420,740,34);x.fillStyle="#76528a";x.font="bold 23px sans-serif";x.fillText("인간보호청 심사 완료",330,510);x.fillStyle="#382840";x.font="bold 24px sans-serif";x.fillText("CRACK USER NOTE",58,625);x.fillStyle="#fff";x.fillRect(48,650,1104,410);x.strokeStyle="#cbbbd4";x.strokeRect(48,650,1104,410);x.fillStyle="#403346";x.font="19px monospace";let yy=695;for(const line of $("userNote").value.split("\n")){const rows=wrapCanvasText(x,line,78,yy,1040,29);yy+=Math.max(1,rows)*29;if(yy>1030)break;}$("savedImg").src=c.toDataURL("image/png");$("savedWrap").hidden=false;$("savedWrap").scrollIntoView({behavior:"smooth",block:"nearest"});};
+function wrapCanvasText(ctx,text,x,y,maxWidth,lineHeight){const words=String(text).split(" ");let line="",rows=0;for(const word of words){const test=line?line+" "+word:word;if(ctx.measureText(test).width>maxWidth&&line){ctx.fillText(line,x,y);line=word;y+=lineHeight;rows++;}else line=test;}if(line){ctx.fillText(line,x,y);rows++;}return rows;}
+$("playBtn").onclick=()=>{$("playMsg").hidden=false;};
+$("restartBtn").onclick=()=>{person={};answers={};idx=0;score=0;registrationId="";$("registryLayout").classList.remove("is-complete");$("savedWrap").hidden=true;$("playMsg").hidden=true;$("copyBtn").textContent="유저노트 복사";$("resultView").style.display="none";$("startView").hidden=false;$("questionView").hidden=true;$("panelState").textContent="APPLICATION FORM";$("liveName").textContent="미기재";$("liveDemographic").textContent="—";$("liveRegistration").textContent="심사 대기";$("liveClassification").textContent="미정";$("liveAnswers").innerHTML="";$("livePaper").classList.remove("completed");$("livePaper").querySelector(".paper-top b").textContent="人間 登錄 審査";$("liveApproval").hidden=true;$("livePaperNote").textContent="※ 본 서류는 인간보호청 등록 심사용 내부 양식입니다. 답변을 선택하면 해당 항목이 서류에 기록됩니다.";$("documentState").textContent="LIVE DOCUMENT";["personName","personGender","personAge"].forEach(id=>$(id).value="");};
+</script></body></html>

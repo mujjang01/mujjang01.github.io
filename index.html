@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>무쭈의 크랙 작품</title>
+<style>
+:root{--bg:#0f0e13;--card:#1a1820;--line:#2c2933;--ink:#f3eff5;--mute:#a49fae;--accent:#c9a7ff}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",sans-serif}
+main{width:min(1080px,calc(100% - 32px));margin:0 auto;padding:56px 0 64px}
+h1{margin:0 0 6px;font-size:clamp(26px,4vw,38px);letter-spacing:-.04em}
+p.lede{margin:0 0 34px;color:var(--mute);font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+a.card{display:block;color:inherit;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;transition:transform .2s,border-color .2s}
+a.card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.thumb{aspect-ratio:16/9;background:#000;overflow:hidden}
+.thumb img{width:100%;height:100%;object-fit:cover;object-position:center 22%;display:block}
+.body{padding:16px 18px 18px}
+.body h2{margin:0 0 6px;font-size:19px;letter-spacing:-.03em}
+.body p{margin:0;color:var(--mute);font-size:13px;line-height:1.6}
+.tag{display:inline-block;margin-top:10px;padding:3px 8px;border:1px solid var(--line);border-radius:999px;font-size:11px;color:var(--mute)}
+.tag.r{border-color:#7a2b43;color:#f08aa6}
+footer{margin-top:40px;color:var(--mute);font-size:12px}
+@media(max-width:640px){.grid{grid-template-columns:1fr}main{padding-top:36px}}
+</style>
+</head>
+<body>
+<main>
+<h1>무쭈의 크랙 작품</h1>
+<p class="lede">작품마다 세계관과 캐릭터 도감을 모아 둔 홈페이지예요.</p>
+<div class="grid">
+  <a class="card" href="yongsa/">
+    <div class="thumb"><img src="yongsa/img/w/night.jpg" alt=""></div>
+    <div class="body"><h2>하늘에서 용사가 떨어졌다</h2><p>여자가 사라진 지 300년, 서른넷의 사내가 기다리는 중세 판타지.</p><span class="tag r">19+</span></div>
+  </a>
+  <a class="card" href="pethuman/">
+    <div class="thumb"><img src="pethuman/assets/kardo_series.webp" alt=""></div>
+    <div class="body"><h2>애완인간 — PROPERTY OF THE BEAST</h2><p>수인이 주인인 사회, 경매장에서 낙찰된 인간의 기록.</p></div>
+  </a>
+  <a class="card" href="pickmebaby/">
+    <div class="thumb"><img src="pickmebaby/assets/portraits/main/skylar.webp" alt=""></div>
+    <div class="body"><h2>PICK ME BABY</h2><p>애시그로브 대학교 편입생을 둘러싼 포르쉐 내기, 43명의 캠퍼스 로맨스.</p></div>
+  </a>
+  <a class="card" href="ashgrove/">
+    <div class="thumb"><img src="ashgrove/assets/img/og-library-preview.jpg" alt=""></div>
+    <div class="body"><h2>Ashgrove University — After Dark</h2><p>불 꺼진 캠퍼스, 43명의 이름과 익명 게시판 애시톡.</p><span class="tag r">19+</span></div>
+  </a>
+</div>
+<footer>모든 등장인물은 성인입니다.</footer>
+</main>
+</body>
+</html>
